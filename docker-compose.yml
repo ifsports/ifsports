@@ -1,0 +1,231 @@
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    env_file:
+      - ./envs/rabbitmq.env
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  db_teams:
+    image: postgres:15
+    container_name: db_teams
+    restart: always
+    env_file:
+      - ./envs/teams.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - dados_postgres_teams:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d db_teams" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  teamsapi:
+    build:
+      context: ./teams_service
+      dockerfile: Dockerfile
+    container_name: teamsapi
+    restart: always
+    ports:
+      - "8003:8003"
+    env_file:
+      - ./envs/teams.env
+    depends_on:
+      db_teams:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  db_requests:
+    image: postgres:15
+    container_name: db_requests
+    restart: always
+    env_file:
+      - ./envs/requests.env
+    ports:
+      - "5433:5432"
+    volumes:
+      - dados_postgres_requests:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U IntegradorEstelar_42 -d db_requests" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  requestsapi:
+    build:
+      context: ./requests_service
+      dockerfile: Dockerfile
+    container_name: requestsapi
+    restart: always
+    ports:
+      - "8001:8001"
+    env_file:
+      - ./envs/requests.env
+    depends_on:
+      db_requests:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  authapi:
+    build:
+      context: ./auth_service_back
+      dockerfile: Dockerfile
+    container_name: authapi
+    restart: always
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./envs/auth.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  db_competitions:
+    image: postgres:15
+    container_name: db_competitions
+    restart: always
+    env_file:
+      - ./envs/competitions.env
+    ports:
+      - "5434:5432"
+    volumes:
+      - dados_postgres_competition:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U IntegradorGalatico_77 -d db_competitions" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  competitionsapi:
+    build:
+      context: ./competitions-service
+      dockerfile: Dockerfile
+    container_name: competitionsapi
+    restart: always
+    ports:
+      - "8007:8007"
+    env_file:
+      - ./envs/competitions.env
+    depends_on:
+      db_competitions:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  competitionsapi_consumer:
+    build:
+      context: ./competitions-service
+      dockerfile: Dockerfile
+    container_name: competitions_consumer
+    restart: always
+    command: python /code/competitions/api/v1/messaging/consumers.py
+    env_file:
+      - ./envs/competitions.env
+    depends_on:
+      db_competitions:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  db_match_comments:
+    image: postgres:15
+    container_name: db_match_comments
+    restart: always
+    env_file:
+      - ./envs/match_comments.env
+    ports:
+      - "5435:5432"
+    volumes:
+      - dados_postgres_match_comments:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U IntegradorInternacional_94 -d db_match_comments" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  commentsapi:
+    build:
+      context: match-comments-service
+      dockerfile: Dockerfile
+    container_name: commentsapi
+    restart: always
+    ports:
+      - "8002:8002"
+    env_file:
+      - ./envs/match_comments.env
+    depends_on:
+      db_match_comments:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  commentsapi_consumer:
+    build:
+      context: ./match-comments-service
+      dockerfile: Dockerfile
+    container_name: commentsapi_consumer
+    restart: always
+    command: python /app/messaging/consumers.py
+    env_file:
+      - ./envs/match_comments.env
+    depends_on:
+      db_match_comments:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+volumes:
+  dados_postgres_teams: {}
+  dados_postgres_requests: {}
+  dados_postgres_competition: {}
+  dados_postgres_match_comments: {}
+  rabbitmq_data: {}
+
+networks:
+  app-network:
