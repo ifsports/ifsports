@@ -187,7 +187,7 @@ services:
 
   commentsapi:
     build:
-      context: match-comments-service
+      context: ./match-comments-service
       dockerfile: Dockerfile
     container_name: commentsapi
     restart: always
