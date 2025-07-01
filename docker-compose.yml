@@ -94,20 +94,39 @@ services:
     networks:
       - app-network
 
+  db_auth:
+    image: postgres:15
+    container_name: db_auth
+    restart: always
+    env_file:
+      - ./envs/auth.env
+    ports:
+      - "5436:5432"
+    volumes:
+      - dados_postgres_auth:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U auth_user -d auth_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   authapi:
     build:
       context: ./auth_service_back
       dockerfile: Dockerfile
     container_name: authapi
     restart: always
-    volumes:
-      - ./db.sqlite3:/app/db.sqlite3
     ports:
       - "8000:8000"
     env_file:
       - ./envs/auth.env
     depends_on:
       rabbitmq:
+        condition: service_healthy
+      db_auth:
         condition: service_healthy
     networks:
       - app-network
@@ -225,6 +244,7 @@ volumes:
   dados_postgres_requests: {}
   dados_postgres_competition: {}
   dados_postgres_match_comments: {}
+  dados_postgres_auth: {}
   rabbitmq_data: {}
 
 networks:
