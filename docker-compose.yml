@@ -239,12 +239,49 @@ services:
     networks:
       - app-network
 
+  audit:
+    build:
+      context: ./audit_service
+      dockerfile: Dockerfile
+    container_name: audit
+    restart: always
+    ports:
+      - "8008:8008"
+    env_file:
+      - ./envs/audit.env
+    depends_on:
+      db_audit:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  db_audit:
+    image: postgres:15
+    container_name: db_audit
+    env_file:
+      - ./envs/audit.env
+    ports:
+      - "5437:5432"
+    volumes:
+      - dados_postgres_audit:/var/lib/postgresql/data/
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U audit_user -d audit_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
 volumes:
   dados_postgres_teams: {}
   dados_postgres_requests: {}
   dados_postgres_competition: {}
   dados_postgres_match_comments: {}
   dados_postgres_auth: {}
+  dados_postgres_audit: {}
   rabbitmq_data: {}
 
 networks:
