@@ -38,11 +38,12 @@ services:
   - name: requests-service
     url: http://requestsapi:8001
     routes:
-      - name: requests-route
+      - name: requests-protected-all
         paths:
           - /api/v1/requests
+        plugins:
+          - name: jwt
         strip_path: false
-        preserve_host: true
 
   - name: match-comments-service
     url: http://commentsapi:8002
