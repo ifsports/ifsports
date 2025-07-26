@@ -107,6 +107,8 @@ services:
       - name: audit-route
         paths:
           - /api/v1/campus
+        plugins:
+          - name: jwt
         strip_path: false
         preserve_host: true
 
