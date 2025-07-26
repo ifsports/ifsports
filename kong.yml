@@ -72,11 +72,24 @@ services:
   - name: teams-service
     url: http://teamsapi:8003
     routes:
-      - name: teams-route
+      - name: teams-public-list
         paths:
           - /api/v1/teams
+        methods:
+          - GET
         strip_path: false
-        preserve_host: true
+
+      - name: teams-protected-actions
+        paths:
+          - /api/v1/teams
+        methods:
+          - POST
+          - PUT
+          - DELETE
+          - PATCH
+        plugins:
+          - name: jwt
+        strip_path: false
 
   - name: competitions-service
     url: http://competitionsapi:8007
