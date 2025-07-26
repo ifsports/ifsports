@@ -43,8 +43,6 @@ services:
       context: ./teams_service
       dockerfile: Dockerfile
     container_name: teamsapi
-    ports:
-      - "8003:8003"
     env_file:
       - ./envs/teams.env
     depends_on:
@@ -78,8 +76,6 @@ services:
       context: ./requests_service
       dockerfile: Dockerfile
     container_name: requestsapi
-    ports:
-      - "8001:8001"
     env_file:
       - ./envs/requests.env
     depends_on:
@@ -113,8 +109,6 @@ services:
       context: ./auth_service_back
       dockerfile: Dockerfile
     container_name: authapi
-    ports:
-      - "8000:8000"
     env_file:
       - ./envs/auth.env
     depends_on:
@@ -148,8 +142,6 @@ services:
       context: ./competitions-service
       dockerfile: Dockerfile
     container_name: competitionsapi
-    ports:
-      - "8007:8007"
     env_file:
       - ./envs/competitions.env
     depends_on:
@@ -199,8 +191,6 @@ services:
       context: ./match-comments-service
       dockerfile: Dockerfile
     container_name: commentsapi
-    ports:
-      - "8002:8002"
     env_file:
       - ./envs/match_comments.env
     depends_on:
@@ -232,8 +222,6 @@ services:
       context: ./audit_service
       dockerfile: Dockerfile
     container_name: audit
-    ports:
-      - "8008:8008"
     env_file:
       - ./envs/audit.env
     depends_on:
@@ -262,6 +250,29 @@ services:
       retries: 5
       start_period: 10s
 
+  kong-gateway:
+    image: kong:latest
+    container_name: kong-gateway
+    environment:
+      - KONG_DATABASE=off                            
+      - KONG_DECLARATIVE_CONFIG=/kong_config/kong.yml  
+      - KONG_PROXY_LISTEN=0.0.0.0:8000                 
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001                 
+    ports:
+      - "80:8000"     
+      - "8001:8001"    
+    volumes:
+      - ./kong.yml:/kong_config/kong.yml:ro
+    networks:
+      - app-network
+    depends_on: 
+      - teamsapi
+      - requestsapi
+      - authapi
+      - competitionsapi
+      - commentsapi
+      - audit
+
 volumes:
   dados_postgres_teams: {}
   dados_postgres_requests: {}
@@ -273,3 +284,4 @@ volumes:
 
 networks:
   app-network:
+    driver: bridge

@@ -1,0 +1,86 @@
+_format_version: "3.0"
+
+services:
+  - name: auth-service
+    url: http://authapi:8000
+    routes:
+      - name: auth-api-v1-route
+        paths:
+          - /api/v1/auth
+        strip_path: false
+        preserve_host: true
+      - name: auth-suap-callback-route
+        paths:
+          - /auth/suap/callback
+        strip_path: false
+        preserve_host: true
+
+  - name: requests-service
+    url: http://requestsapi:8001
+    routes:
+      - name: requests-route
+        paths:
+          - /api/v1/requests
+        strip_path: false
+        preserve_host: true
+
+  - name: match-comments-service
+    url: http://commentsapi:8002
+    routes:
+      - name: matches-api-route
+        paths:
+          - /api/v1/matches
+        strip_path: false
+        preserve_host: true
+      - name: messages-api-route
+        paths:
+          - /api/v1/chat
+        strip_path: false
+        preserve_host: true
+      - name: socket-io-route
+        paths:
+          - /socket.io
+        strip_path: false
+        preserve_host: true
+
+  - name: teams-service
+    url: http://teamsapi:8003
+    routes:
+      - name: teams-route
+        paths:
+          - /api/v1/teams
+        strip_path: false
+        preserve_host: true
+
+  - name: competitions-service
+    url: http://competitionsapi:8007
+    routes:
+      - name: competitions-api-route
+        paths:
+          - /api/v1/competitions
+        strip_path: false
+        preserve_host: true
+      - name: modalities-api-route
+        paths:
+          - /api/v1/modalities
+        strip_path: false
+        preserve_host: true
+      - name: api-schema-route
+        paths:
+          - /api/schema
+        strip_path: false
+        preserve_host: true
+      - name: api-docs-route
+        paths:
+          - /api/docs
+        strip_path: false
+        preserve_host: true
+
+  - name: audit-service
+    url: http://audit:8008
+    routes:
+      - name: audit-route
+        paths:
+          - /api/v1/campus
+        strip_path: false
+        preserve_host: true
