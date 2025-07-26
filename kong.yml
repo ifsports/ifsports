@@ -47,21 +47,26 @@ services:
   - name: match-comments-service
     url: http://commentsapi:8002
     routes:
-      - name: matches-api-route
+      - name: match-comments-public-read
         paths:
           - /api/v1/matches
-        strip_path: false
-        preserve_host: true
-      - name: messages-api-route
-        paths:
           - /api/v1/chat
+        methods:
+          - GET
         strip_path: false
-        preserve_host: true
-      - name: socket-io-route
+
+      - name: match-comments-protected-write
         paths:
-          - /socket.io
+          - /api/v1/matches
+          - /api/v1/chat
+        methods:
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+        plugins:
+          - name: jwt
         strip_path: false
-        preserve_host: true
 
   - name: teams-service
     url: http://teamsapi:8003
