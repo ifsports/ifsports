@@ -75,6 +75,11 @@ services:
           - /api/docs
         strip_path: false
         preserve_host: true
+      - name: media-route
+        paths:
+          - /media
+        strip_path: false
+        preserve_host: true
 
   - name: audit-service
     url: http://audit:8008
