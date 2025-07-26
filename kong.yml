@@ -75,31 +75,49 @@ services:
   - name: competitions-service
     url: http://competitionsapi:8007
     routes:
-      - name: competitions-api-route
-        paths:
-          - /api/v1/competitions
-        strip_path: false
-        preserve_host: true
-      - name: modalities-api-route
-        paths:
-          - /api/v1/modalities
-        strip_path: false
-        preserve_host: true
-      - name: api-schema-route
+      - name: competitions-public-docs-schema
         paths:
           - /api/schema
-        strip_path: false
-        preserve_host: true
-      - name: api-docs-route
-        paths:
           - /api/docs
+        methods:
+          - GET
         strip_path: false
-        preserve_host: true
-      - name: media-route
+
+      - name: competitions-public-media
         paths:
           - /media
+        methods:
+          - GET
         strip_path: false
-        preserve_host: true
+
+      - name: competitions-public-read
+        paths:
+          - /api/v1/competitions
+          - /api/v1/modalities
+        methods:
+          - GET
+        strip_path: false
+
+      - name: competitions-protected-write
+        paths:
+          - /api/v1/competitions
+          - /api/v1/modalities
+        methods:
+          - POST
+          - PUT
+          - DELETE
+          - PATCH
+        plugins:
+          - name: jwt
+        strip_path: false
+      
+      - name: competitions-protected-special-cases
+        paths:
+          - /api/v1/competitions/teams/
+          - /api/v1/modalities/
+        plugins:
+          - name: jwt
+        strip_path: false
 
   - name: audit-service
     url: http://audit:8008
