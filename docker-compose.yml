@@ -45,6 +45,7 @@ services:
     container_name: teamsapi
     env_file:
       - ./envs/teams.env
+      - ./jwt.env
     depends_on:
       db_teams:
         condition: service_healthy
@@ -78,6 +79,7 @@ services:
     container_name: requestsapi
     env_file:
       - ./envs/requests.env
+      - ./jwt.env
     depends_on:
       db_requests:
         condition: service_healthy
@@ -111,6 +113,7 @@ services:
     container_name: authapi
     env_file:
       - ./envs/auth.env
+      - ./jwt.env
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -144,6 +147,7 @@ services:
     container_name: competitionsapi
     env_file:
       - ./envs/competitions.env
+      - ./jwt.env
     depends_on:
       db_competitions:
         condition: service_healthy
@@ -193,6 +197,7 @@ services:
     container_name: commentsapi
     env_file:
       - ./envs/match_comments.env
+      - ./jwt.env
     depends_on:
       db_match_comments:
         condition: service_healthy
@@ -224,6 +229,7 @@ services:
     container_name: audit
     env_file:
       - ./envs/audit.env
+      - ./jwt.env
     depends_on:
       db_audit:
         condition: service_healthy
@@ -253,6 +259,8 @@ services:
   kong-gateway:
     image: kong:latest
     container_name: kong-gateway
+    env_file:
+      - ./jwt.env
     environment:
       - KONG_DATABASE=off                            
       - KONG_DECLARATIVE_CONFIG=/kong_config/kong.yml  

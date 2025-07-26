@@ -4,14 +4,34 @@ services:
   - name: auth-service
     url: http://authapi:8000
     routes:
-      - name: auth-api-v1-route
+      - name: auth-public-login-route
         paths:
-          - /api/v1/auth
+          - /api/v1/auth/token
+          - /api/v1/auth/token/refresh
         strip_path: false
         preserve_host: true
-      - name: auth-suap-callback-route
+
+      - name: auth-public-suap-callback-route
         paths:
           - /auth/suap/callback
+        strip_path: false
+        preserve_host: true
+
+      - name: auth-public-validate-users-route
+        methods: 
+          - POST 
+        paths:
+          - /api/v1/auth/users
+        strip_path: false
+        preserve_host: true
+
+      - name: auth-protected-users-route
+        paths:
+          - /api/v1/auth/logout
+          - /api/v1/auth/users/me
+          - /api/v1/auth/users/
+        plugins:
+          - name: jwt
         strip_path: false
         preserve_host: true
 
@@ -89,3 +109,12 @@ services:
           - /api/v1/campus
         strip_path: false
         preserve_host: true
+
+consumers:
+  - username: platform-users-recomeco
+
+jwt_secrets:
+  - consumer: platform-users-recomeco
+    key: ifsports-recomeco
+    algorithm: HS256
+    secret: "kM3b-z8RpLqW9vY7xJ4tG6sF2cH1eA5nK0jU8iO-vC7xZ1qP9mL3bE4"
