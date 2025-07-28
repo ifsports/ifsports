@@ -227,6 +227,7 @@ services:
       context: ./audit_service
       dockerfile: Dockerfile
     container_name: audit
+    command: celery -A audit_project worker -l info --queues audit_queue
     env_file:
       - ./envs/audit.env
       - ./jwt.env
