@@ -145,8 +145,6 @@ services:
       context: ./calendar-service
       dockerfile: Dockerfile
     container_name: calendarapi
-    ports:
-      - "8012:8012"
     env_file:
       - ./envs/calendar.env
     depends_on:

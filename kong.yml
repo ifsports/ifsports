@@ -149,6 +149,24 @@ services:
         strip_path: false
         preserve_host: true
 
+  - name: calendar-service
+    url: http://calendarapi:8012
+    routes:
+      - name: calendar-public-auth
+        paths:
+          - /api/v1/calendar/auth
+          - /api/v1/calendar/auth/callback
+        strip_path: false
+        preserve_host: true
+
+      - name: calendar-protected-events
+        paths:
+          - /api/v1/calendar/events
+        plugins:
+          - name: jwt
+        strip_path: false
+        preserve_host: true
+
 consumers:
   - username: platform-users-recomeco
 
