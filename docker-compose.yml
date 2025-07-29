@@ -122,6 +122,39 @@ services:
     networks:
       - app-network
 
+  db_calendar:
+    image: postgres:15
+    container_name: db_calendar
+    env_file:
+      - ./envs/calendar.env
+    ports:
+      - "5442:5432"
+    volumes:
+      - dados_postgres_calendar:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U IntegradorMundial_87 -d db_calendar" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  calendarapi:
+    build:
+      context: ./calendar-service
+      dockerfile: Dockerfile
+    container_name: calendarapi
+    ports:
+      - "8012:8012"
+    env_file:
+      - ./envs/calendar.env
+    depends_on:
+      db_calendar:
+        condition: service_healthy
+    networks:
+      - app-network
+
   db_competitions:
     image: postgres:15
     container_name: db_competitions
@@ -289,6 +322,7 @@ volumes:
   dados_postgres_match_comments: {}
   dados_postgres_auth: {}
   dados_postgres_audit: {}
+  dados_postgres_calendar: {}
   rabbitmq_data: {}
 
 networks:
