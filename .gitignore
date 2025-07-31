@@ -37,3 +37,4 @@ __pycache__/
 *.py[cod]
 
 jwt.env
+deploy.sh
