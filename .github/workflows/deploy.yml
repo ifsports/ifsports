@@ -1,0 +1,27 @@
+name: Deploy to Google Cloud VM
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Checkout do código
+      # Baixa o código do seu repositório para a máquina do Actions
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Passo 2: Executar o script de deploy na VM via SSH
+      - name: Deploy to VM
+        # Usamos uma Action pronta da comunidade para facilitar a conexão SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            ~/deploy.sh
