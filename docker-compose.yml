@@ -53,7 +53,8 @@ services:
         condition: service_healthy
     networks:
       - app-network
-
+    expose: 
+      - "8003"
   db_requests:
     image: postgres:15
     container_name: db_requests
@@ -87,6 +88,8 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    expose: 
+      - "8001"
 
   db_auth:
     image: postgres:15
@@ -121,6 +124,8 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    expose: 
+      - "8000"
 
   db_calendar:
     image: postgres:15
@@ -152,6 +157,8 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    expose: 
+      - "8012"
 
   db_competitions:
     image: postgres:15
@@ -186,6 +193,8 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    expose: 
+      - "8007"
 
   competitionsapi_consumer:
     build:
@@ -236,6 +245,8 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    expose: 
+      - "8002"
 
   commentsapi_consumer:
     build:
@@ -269,6 +280,8 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    expose: 
+      - "8008"
 
   db_audit:
     image: postgres:15
@@ -326,3 +339,4 @@ volumes:
 networks:
   app-network:
     driver: bridge
+    name: app-network

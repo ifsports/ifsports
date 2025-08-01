@@ -1,0 +1,98 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    ports:
+      - "4000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - app-network
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+  postgres-exporter-teams:
+    image: prometheuscommunity/postgres-exporter
+    container_name: postgres-exporter-teams
+    env_file:
+      - ../envs/teams.env 
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  postgres-exporter-requests:
+    image: prometheuscommunity/postgres-exporter
+    container_name: postgres-exporter-requests
+    env_file:
+      - ../envs/requests.env
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  postgres-exporter-auth:
+    image: prometheuscommunity/postgres-exporter
+    container_name: postgres-exporter-auth
+    env_file:
+      - ../envs/auth.env
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  postgres-exporter-calendar:
+    image: prometheuscommunity/postgres-exporter
+    container_name: postgres-exporter-calendar
+    env_file:
+      - ../envs/calendar.env
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  postgres-exporter-competitions:
+    image: prometheuscommunity/postgres-exporter
+    container_name: postgres-exporter-competitions
+    env_file:
+      - ../envs/competitions.env
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  postgres-exporter-match-comments:
+    image: prometheuscommunity/postgres-exporter
+    container_name: postgres-exporter-match-comments
+    env_file:
+      - ../envs/match_comments.env
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  postgres-exporter-audit:
+    image: prometheuscommunity/postgres-exporter
+    container_name: postgres-exporter-audit
+    env_file:
+      - ../envs/audit.env
+    networks:
+      - app-network
+    restart: unless-stopped
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+
+networks:
+  app-network:
+    external: true
