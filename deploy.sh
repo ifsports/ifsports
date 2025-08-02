@@ -52,6 +52,12 @@ cd ..
 echo "Subindo os contêineres com Docker Compose..."
 docker-compose up --build -d --remove-orphans
 
+echo "Subindo os containers de Monitoramento do Banco..."
+docker-compose -f monitoring/docker-compose.monitoring.yml up --build -d --remove-orphans
+
+echo "Subindo os containers de Backup do Banco..."
+docker-compose -f docker-compose.backup.yml up --build -d --remove-orphans
+
 echo "Limpando imagens Docker antigas..."
 docker image prune -af
 
