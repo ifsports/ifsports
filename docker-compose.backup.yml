@@ -1,0 +1,95 @@
+services:
+  backup_db_teams:
+    image: eeshugerman/postgres-backup-s3:15
+    container_name: backup_db_teams
+    restart: unless-stopped
+    env_file:
+      - ./envs/teams.env          # Para POSTGRES_PASSWORD
+      - ./envs/backup-s3.env      # Para credenciais S3/GCS
+    environment:
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+    networks:
+      - app-network
+
+  backup_db_requests:
+    image: eeshugerman/postgres-backup-s3:15
+    container_name: backup_db_requests
+    restart: unless-stopped
+    env_file:
+      - ./envs/requests.env
+      - ./envs/backup-s3.env
+    environment:
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+    networks:
+      - app-network
+  
+  backup_db_audit:
+    image: eeshugerman/postgres-backup-s3:15
+    container_name: backup_db_audit
+    restart: unless-stopped
+    env_file:
+      - ./envs/audit.env
+      - ./envs/backup-s3.env
+    environment:
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+    networks:
+      - app-network
+
+  backup_db_auth:
+    image: eeshugerman/postgres-backup-s3:15
+    container_name: backup_db_auth
+    restart: unless-stopped
+    env_file:
+      - ./envs/auth.env
+      - ./envs/backup-s3.env
+    environment:
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+    networks:
+      - app-network
+
+  backup_db_calendar:
+    image: eeshugerman/postgres-backup-s3:15
+    container_name: backup_db_calendar
+    restart: unless-stopped
+    env_file:
+      - ./envs/calendar.env
+      - ./envs/backup-s3.env
+    environment:
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+    networks:
+      - app-network
+
+  backup_db_competitions:
+    image: eeshugerman/postgres-backup-s3:15
+    container_name: backup_db_competitions
+    restart: unless-stopped
+    env_file:
+      - ./envs/competitions.env
+      - ./envs/backup-s3.env
+    environment:
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+    networks:
+      - app-network
+
+  backup_db_match_comments:
+    image: eeshugerman/postgres-backup-s3:15
+    container_name: backup_db_match_comments
+    restart: unless-stopped
+    env_file:
+      - ./envs/match_comments.env
+      - ./envs/backup-s3.env
+    environment:
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
