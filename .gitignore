@@ -37,3 +37,12 @@ __pycache__/
 *.py[cod]
 
 jwt.env
+
+audit_service/
+auth_service_back/
+calendar-service/
+competitions-service/
+ifsports-docs/
+match-comments-service/
+requests_service/
+teams_service/

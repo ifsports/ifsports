@@ -1,0 +1,48 @@
+name: Gerar e Publicar Documentação
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Orquestrador
+        uses: actions/checkout@v4
+
+      - name: Checkout da Documentação
+        uses: actions/checkout@v4
+        with:
+          repository: ifsports/ifsports-docs
+          path: ifsports-docs
+
+      - name: Iniciar serviços com Docker Compose
+        run: |
+          docker-compose up -d
+          echo "Aguardando 30 segundos para os serviços estabilizarem..."
+          sleep 30
+
+      - name: Coletar especificações OpenAPI
+        run: ./coletar_docs.sh
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Instalar dependências do Sphinx
+        run: pip install -r ifsports-docs/requirements.txt
+
+      - name: Construir as páginas HTML com Sphinx
+        run: make html
+        working-directory: ./ifsports-docs
+
+      - name: Deploy no GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./ifsports-docs/build/html

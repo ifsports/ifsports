@@ -18,8 +18,8 @@ services:
         preserve_host: true
 
       - name: auth-public-validate-users-route
-        methods: 
-          - POST 
+        methods:
+          - POST
         paths:
           - /api/v1/auth/users
         strip_path: false
@@ -129,7 +129,7 @@ services:
         plugins:
           - name: jwt
         strip_path: false
-      
+
       - name: competitions-protected-special-cases
         paths:
           - /api/v1/competitions/teams/

@@ -264,6 +264,22 @@ services:
     networks:
       - app-network
 
+  auditapi:
+    build:
+      context: ./audit_service
+      dockerfile: Dockerfile
+    container_name: auditapi
+    env_file:
+      - ./envs/audit.env
+      - ./jwt.env
+    depends_on:
+      db_audit:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
   audit:
     build:
       context: ./audit_service
@@ -324,7 +340,7 @@ services:
       - authapi
       - competitionsapi
       - commentsapi
-      - audit
+      - auditapi
 
 volumes:
   dados_postgres_teams: {}
