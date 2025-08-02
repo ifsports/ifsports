@@ -279,6 +279,10 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    # <<< CORREÇÃO: Trocado "ports" por "expose" para evitar conflito com o Kong.
+    # <<< E usando uma porta única para clareza.
+    expose:
+      - "8008"
 
   audit:
     build:
@@ -296,8 +300,7 @@ services:
         condition: service_healthy
     networks:
       - app-network
-    expose: 
-      - "8008"
+    # <<< CORREÇÃO: Linha "expose" removida pois o worker não precisa dela.
 
   db_audit:
     image: postgres:15
@@ -341,6 +344,7 @@ services:
       - competitionsapi
       - commentsapi
       - auditapi
+      - calendarapi
 
 volumes:
   dados_postgres_teams: {}
