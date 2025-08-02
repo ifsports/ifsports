@@ -17,7 +17,7 @@ echo "Atualizando microserviços..."
 echo "Atualizando o auth-service..."
 cd ~/ifsports/auth_service_back/   
 git pull origin master
-
+cd ..
 
 echo "Atualizando o audit-service..."
 cd audit_service
