@@ -22,63 +22,63 @@ jobs:
         with:
           repository: ifsports/auth_service_back
           path: auth_service_back
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Checkout do Teams Service
         uses: actions/checkout@v4
         with:
           repository: ifsports/teams_service
           path: teams_service
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Checkout do Requests Service
         uses: actions/checkout@v4
         with:
           repository: ifsports/requests_service
           path: requests_service
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Checkout do Calendar Service
         uses: actions/checkout@v4
         with:
           repository: ifsports/calendar-service
           path: calendar-service
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Checkout do Competitions Service
         uses: actions/checkout@v4
         with:
           repository: ifsports/competitions-service
           path: competitions-service
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Checkout do Match Comments Service
         uses: actions/checkout@v4
         with:
           repository: ifsports/match-comments-service
           path: match-comments-service
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Checkout do Audit Service
         uses: actions/checkout@v4
         with:
           repository: ifsports/audit_service
           path: audit_service
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Checkout da Documentação
         uses: actions/checkout@v4
         with:
           repository: ifsports/ifsports-docs
           path: ifsports-docs
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Criar arquivos de ambiente a partir dos Secrets
         run: |
           echo "Criando arquivos .env..."
           mkdir -p envs
           echo "${{ secrets.JWT_ENV_CONTENT }}" > jwt.env
-          echo "${{ secrets.RABBITMQ_ENV_CONTENT }}" > envs/rabbitmq.env
-          echo "${{ secrets.TEAMS_ENV_CONTENT }}" > envs/teams.env
-          echo "${{ secrets.REQUESTS_ENV_CONTENT }}" > envs/requests.env
-          echo "${{ secrets.AUTH_ENV_CONTENT }}" > envs/auth.env
-          echo "${{ secrets.CALENDAR_ENV_CONTENT }}" > envs/calendar.env
-          echo "${{ secrets.COMPETITIONS_ENV_CONTENT }}" > envs/competitions.env
-          echo "${{ secrets.MATCH_COMMENTS_ENV_CONTENT }}" > envs/match_comments.env
-          echo "${{ secrets.AUDIT_ENV_CONTENT }}" > envs/audit.env
-          echo "Arquivos .env criados."
+          # ... (crie um echo para cada um dos seus .env secrets) ...
 
       - name: Iniciar serviços com Docker Compose
         run: docker compose up -d
