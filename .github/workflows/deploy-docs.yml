@@ -22,7 +22,7 @@ jobs:
 
       - name: Iniciar serviços com Docker Compose
         run: |
-          docker-compose up -d
+          docker compose up -d
           echo "Aguardando 30 segundos para os serviços estabilizarem..."
           sleep 30
 
