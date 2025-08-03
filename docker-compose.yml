@@ -264,7 +264,7 @@ services:
     networks:
       - app-network
 
-  auditapi:
+  auditapi: # <-- NOVO SERVIÇO PARA A API WEB. SEM 'command', IGUAL AOS OUTROS
     build:
       context: ./audit_service
       dockerfile: Dockerfile
@@ -279,16 +279,12 @@ services:
         condition: service_healthy
     networks:
       - app-network
-    # <<< CORREÇÃO: Trocado "ports" por "expose" para evitar conflito com o Kong.
-    # <<< E usando uma porta única para clareza.
-    expose:
-      - "8008"
 
-  audit:
+  audit_worker:
     build:
       context: ./audit_service
       dockerfile: Dockerfile
-    container_name: audit
+    container_name: audit_worker
     command: celery -A audit_project worker -l info --queues audit_queue
     env_file:
       - ./envs/audit.env
@@ -300,8 +296,7 @@ services:
         condition: service_healthy
     networks:
       - app-network
-    # <<< CORREÇÃO: Linha "expose" removida pois o worker não precisa dela.
-
+      
   db_audit:
     image: postgres:15
     container_name: db_audit

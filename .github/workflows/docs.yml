@@ -13,6 +13,51 @@ jobs:
     steps:
       - name: Checkout do Orquestrador
         uses: actions/checkout@v4
+        with:
+          repository: ifsports/ifsports
+          path: .
+
+      - name: Checkout do Auth Service
+        uses: actions/checkout@v4
+        with:
+          repository: ifsports/auth_service_back
+          path: auth_service_back
+
+      - name: Checkout do Teams Service
+        uses: actions/checkout@v4
+        with:
+          repository: ifsports/teams_service
+          path: teams_service
+
+      - name: Checkout do Requests Service
+        uses: actions/checkout@v4
+        with:
+          repository: ifsports/requests_service
+          path: requests_service
+
+      - name: Checkout do Calendar Service
+        uses: actions/checkout@v4
+        with:
+          repository: ifsports/calendar-service
+          path: calendar-service
+
+      - name: Checkout do Competitions Service
+        uses: actions/checkout@v4
+        with:
+          repository: ifsports/competitions-service
+          path: competitions-service
+
+      - name: Checkout do Match Comments Service
+        uses: actions/checkout@v4
+        with:
+          repository: ifsports/match-comments-service
+          path: match-comments-service
+
+      - name: Checkout do Audit Service
+        uses: actions/checkout@v4
+        with:
+          repository: ifsports/audit_service
+          path: audit_service
 
       - name: Checkout da Documentação
         uses: actions/checkout@v4
@@ -20,7 +65,6 @@ jobs:
           repository: ifsports/ifsports-docs
           path: ifsports-docs
 
-      # Lembre-se de criar cada um desses secrets nas configurações do repositório 'ifsports'
       - name: Criar arquivos de ambiente a partir dos Secrets
         run: |
           echo "Criando arquivos .env..."
@@ -39,10 +83,9 @@ jobs:
       - name: Iniciar serviços com Docker Compose
         run: docker compose up -d
 
-      - name: Aguardar serviços ficarem saudáveis
+      - name: Aguardar serviços estabilizarem
         run: |
-          echo "Aguardando 1 minuto para os serviços estabilizarem..."
-          # Usar sleep aqui é mais simples que um wait complexo para múltiplos serviços
+          echo "Aguardando 60 segundos para os serviços estabilizarem..."
           sleep 60
 
       - name: Coletar especificações OpenAPI
@@ -53,10 +96,10 @@ jobs:
 
       - name: Construir as páginas HTML com Sphinx
         run: make html
-        working-directory: ./ifsports-docs # Roda o comando dentro da pasta de docs
+        working-directory: ./ifsports-docs
 
       - name: Deploy no GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./ifsports-docs/build/html # O diretório onde o site foi construído
+          publish_dir: ./ifsports-docs/build/html
