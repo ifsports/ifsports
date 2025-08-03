@@ -1,0 +1,62 @@
+name: Gerar e Publicar Documentação
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Orquestrador
+        uses: actions/checkout@v4
+
+      - name: Checkout da Documentação
+        uses: actions/checkout@v4
+        with:
+          repository: ifsports/ifsports-docs
+          path: ifsports-docs
+
+      # Lembre-se de criar cada um desses secrets nas configurações do repositório 'ifsports'
+      - name: Criar arquivos de ambiente a partir dos Secrets
+        run: |
+          echo "Criando arquivos .env..."
+          mkdir -p envs
+          echo "${{ secrets.JWT_ENV_CONTENT }}" > jwt.env
+          echo "${{ secrets.RABBITMQ_ENV_CONTENT }}" > envs/rabbitmq.env
+          echo "${{ secrets.TEAMS_ENV_CONTENT }}" > envs/teams.env
+          echo "${{ secrets.REQUESTS_ENV_CONTENT }}" > envs/requests.env
+          echo "${{ secrets.AUTH_ENV_CONTENT }}" > envs/auth.env
+          echo "${{ secrets.CALENDAR_ENV_CONTENT }}" > envs/calendar.env
+          echo "${{ secrets.COMPETITIONS_ENV_CONTENT }}" > envs/competitions.env
+          echo "${{ secrets.MATCH_COMMENTS_ENV_CONTENT }}" > envs/match_comments.env
+          echo "${{ secrets.AUDIT_ENV_CONTENT }}" > envs/audit.env
+          echo "Arquivos .env criados."
+
+      - name: Iniciar serviços com Docker Compose
+        run: docker compose up -d
+
+      - name: Aguardar serviços ficarem saudáveis
+        run: |
+          echo "Aguardando 1 minuto para os serviços estabilizarem..."
+          # Usar sleep aqui é mais simples que um wait complexo para múltiplos serviços
+          sleep 60
+
+      - name: Coletar especificações OpenAPI
+        run: ./coletar_docs.sh
+
+      - name: Instalar dependências do Sphinx
+        run: pip install sphinx sphinxcontrib-openapi
+
+      - name: Construir as páginas HTML com Sphinx
+        run: make html
+        working-directory: ./ifsports-docs # Roda o comando dentro da pasta de docs
+
+      - name: Deploy no GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./ifsports-docs/build/html # O diretório onde o site foi construído
