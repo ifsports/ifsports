@@ -1,0 +1,447 @@
+openapi: 3.0.3
+info:
+  title: Competitions Service API
+  version: 1.0.0
+  description: Documentação da API para o serviço responsavel por gerir as competições.
+paths:
+  /api/v1/competitions/:
+    get:
+      operationId: v1_competitions_retrieve
+      description: Retorna todas as competições para um campus específico.
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: v1_competitions_create
+      description: Cria uma nova competição.
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/{competition_id}/:
+    get:
+      operationId: v1_competitions_retrieve_2
+      description: Retorna uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+    put:
+      operationId: v1_competitions_update
+      description: Atualiza uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: v1_competitions_destroy
+      description: Deleta uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '204':
+          description: No response body
+  /api/v1/competitions/{competition_id}/finish/:
+    patch:
+      operationId: v1_competitions_finish_partial_update
+      description: Atualiza o status de uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/{competition_id}/generate/:
+    post:
+      operationId: v1_competitions_generate_create
+      description: Gera os jogos e classificações de uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/{competition_id}/matches/:
+    get:
+      operationId: v1_competitions_matches_retrieve_3
+      description: Retorna todas as partidas de uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/{competition_id}/rounds/:
+    get:
+      operationId: v1_competitions_rounds_retrieve
+      description: Retorna todas as rodadas de uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/{competition_id}/rounds/matches:
+    get:
+      operationId: v1_competitions_rounds_matches_retrieve_2
+      description: Retorna todas as rodadas de uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/{competition_id}/standings/:
+    get:
+      operationId: v1_competitions_standings_retrieve
+      description: Retorna a classificação de uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/{competition_id}/start/:
+    patch:
+      operationId: v1_competitions_start_partial_update
+      description: Atualiza o status de uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/{competition_id}/teams/:
+    get:
+      operationId: v1_competitions_teams_retrieve_2
+      description: Retorna todas as equipes de uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: v1_competitions_teams_create
+      description: |-
+        "
+        Verifica existencia de uma equipe para uma competição específica.
+      parameters:
+      - in: path
+        name: competition_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/matches/:
+    get:
+      operationId: v1_competitions_matches_retrieve
+      description: Retorna todas as partidas de todas as competições de um campus
+        específico.
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/matches/{match_id}/:
+    get:
+      operationId: v1_competitions_matches_retrieve_2
+      description: Retorna uma partida específica de uma competição.
+      parameters:
+      - in: path
+        name: match_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+    put:
+      operationId: v1_competitions_matches_update
+      description: Atualiza uma partida específica de uma competição.
+      parameters:
+      - in: path
+        name: match_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/matches/{match_id}/finish:
+    patch:
+      operationId: v1_competitions_matches_finish_partial_update
+      description: Atualiza o satus de uma partida específica de uma competição para
+        "finalizada".
+      parameters:
+      - in: path
+        name: match_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/matches/{match_id}/start:
+    patch:
+      operationId: v1_competitions_matches_start_partial_update
+      description: Atualiza o satus de uma partida específica de uma competição para
+        "em andamento".
+      parameters:
+      - in: path
+        name: match_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/matches/today/:
+    get:
+      operationId: v1_competitions_matches_today_retrieve
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/rounds/{round_id}/matches:
+    get:
+      operationId: v1_competitions_rounds_matches_retrieve
+      description: Retorna todos os jogos de uma rodada específica
+      parameters:
+      - in: path
+        name: round_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/v1/competitions/teams/{team_id}/:
+    get:
+      operationId: v1_competitions_teams_retrieve
+      description: Retorna uma equipe específica de uma competição específica.
+      parameters:
+      - in: path
+        name: team_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+    put:
+      operationId: v1_competitions_teams_update
+      description: Atualiza uma equipe específica de uma competição específica.
+      parameters:
+      - in: path
+        name: team_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: v1_competitions_teams_destroy
+      description: Deleta uma equipe específica de uma competição específica.
+      parameters:
+      - in: path
+        name: team_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '204':
+          description: No response body
+  /api/v1/modalities/:
+    get:
+      operationId: v1_modalities_retrieve
+      description: Retorna todas as modalidades para um campus específico.
+      tags:
+      - v1
+      security:
+      - {}
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: v1_modalities_create
+      description: Cria uma nova modalidade.
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+  /api/v1/modalities/{modality_id}/:
+    get:
+      operationId: v1_modalities_retrieve_2
+      description: Retorna uma modalidade específica para um campus específico.
+      parameters:
+      - in: path
+        name: modality_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+    put:
+      operationId: v1_modalities_update
+      description: Atualiza uma modalidade específica.
+      parameters:
+      - in: path
+        name: modality_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: v1_modalities_destroy
+      description: Deleta uma modalidade específica para um campus específico.
+      parameters:
+      - in: path
+        name: modality_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - v1
+      responses:
+        '204':
+          description: No response body
+components: {}

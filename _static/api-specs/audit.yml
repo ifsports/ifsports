@@ -1,0 +1,113 @@
+openapi: 3.0.3
+info:
+  title: Audit Service API
+  version: 1.0.0
+  description: Serviço responsável por registrar e auditar eventos da plataforma.
+paths:
+  /api/v1/campus/{campus_code}/logs/:
+    get:
+      operationId: v1_campus_logs_list
+      description: Retorna uma lista paginada de todos os logs de auditoria associados
+        ao `campus_code` fornecido na URL.
+      summary: Lista os logs de auditoria para um campus específico.
+      parameters:
+      - in: path
+        name: campus_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - v1
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Log'
+          description: ''
+  /api/v1/campus/{campus_code}/logs/{id}/:
+    get:
+      operationId: v1_campus_logs_retrieve
+      description: Retorna os detalhes de um único log de auditoria, identificado
+        pelo seu ID.
+      summary: Obtém um log de auditoria específico.
+      parameters:
+      - in: path
+        name: campus_code
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this log.
+        required: true
+      tags:
+      - v1
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Log'
+          description: ''
+components:
+  schemas:
+    Log:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        timestamp:
+          type: string
+          format: date-time
+        campus_code:
+          type: string
+          maxLength: 50
+        user_id:
+          type: string
+          maxLength: 255
+        service_origin:
+          type: string
+          maxLength: 100
+        event_type:
+          type: string
+          maxLength: 100
+        entity_id:
+          type: string
+          maxLength: 255
+        old_data:
+          nullable: true
+        new_data:
+          nullable: true
+        ip_address:
+          type: string
+          nullable: true
+      required:
+      - campus_code
+      - entity_id
+      - event_type
+      - id
+      - service_origin
+      - timestamp
+      - user_id
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
