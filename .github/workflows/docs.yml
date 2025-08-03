@@ -13,80 +13,74 @@ jobs:
     steps:
       - name: Checkout do Orquestrador
         uses: actions/checkout@v4
-        with:
-          repository: ifsports/ifsports
-          path: .
-
+        with: { repository: ifsports/ifsports, path: . }
       - name: Checkout do Auth Service
         uses: actions/checkout@v4
-        with:
-          repository: ifsports/auth_service_back
-          path: auth_service_back
-          token: ${{ secrets.ACESS_TOKEN }}
-
+        with: { repository: ifsports/auth_service_back, path: auth_service_back, token: ${{ secrets.ACESS_TOKEN }} }
       - name: Checkout do Teams Service
         uses: actions/checkout@v4
-        with:
-          repository: ifsports/teams_service
-          path: teams_service
-          token: ${{ secrets.ACESS_TOKEN }}
-
+        with: { repository: ifsports/teams_service, path: teams_service, token: ${{ secrets.ACESS_TOKEN }} }
       - name: Checkout do Requests Service
         uses: actions/checkout@v4
-        with:
-          repository: ifsports/requests_service
-          path: requests_service
-          token: ${{ secrets.ACESS_TOKEN }}
-
+        with: { repository: ifsports/requests_service, path: requests_service, token: ${{ secrets.ACESS_TOKEN }} }
       - name: Checkout do Calendar Service
         uses: actions/checkout@v4
-        with:
-          repository: ifsports/calendar-service
-          path: calendar-service
-          token: ${{ secrets.ACESS_TOKEN }}
-
+        with: { repository: ifsports/calendar-service, path: calendar-service, token: ${{ secrets.ACESS_TOKEN }} }
       - name: Checkout do Competitions Service
         uses: actions/checkout@v4
-        with:
-          repository: ifsports/competitions-service
-          path: competitions-service
-          token: ${{ secrets.ACESS_TOKEN }}
-
+        with: { repository: ifsports/competitions-service, path: competitions-service, token: ${{ secrets.ACESS_TOKEN }} }
       - name: Checkout do Match Comments Service
         uses: actions/checkout@v4
-        with:
-          repository: ifsports/match-comments-service
-          path: match-comments-service
-          token: ${{ secrets.ACESS_TOKEN }}
-
+        with: { repository: ifsports/match-comments-service, path: match-comments-service, token: ${{ secrets.ACESS_TOKEN }} }
       - name: Checkout do Audit Service
         uses: actions/checkout@v4
-        with:
-          repository: ifsports/audit_service
-          path: audit_service
-          token: ${{ secrets.ACESS_TOKEN }}
-
+        with: { repository: ifsports/audit_service, path: audit_service, token: ${{ secrets.ACESS_TOKEN }} }
       - name: Checkout da Documentação
         uses: actions/checkout@v4
-        with:
-          repository: ifsports/ifsports-docs
-          path: ifsports-docs
-          token: ${{ secrets.ACESS_TOKEN }}
+        with: { repository: ifsports/ifsports-docs, path: ifsports-docs, token: ${{ secrets.ACESS_TOKEN }} }
 
       - name: Criar arquivos de ambiente a partir dos Secrets
         run: |
-          echo "Criando arquivos .env..."
+          echo "Criando arquivos .env de forma segura..."
           mkdir -p envs
-          echo "${{ secrets.JWT_ENV_CONTENT }}" > jwt.env
-          echo "${{ secrets.RABBITMQ_ENV_CONTENT }}" > envs/rabbitmq.env
-          echo "${{ secrets.TEAMS_ENV_CONTENT }}" > envs/teams.env
-          echo "${{ secrets.REQUESTS_ENV_CONTENT }}" > envs/requests.env
-          echo "${{ secrets.AUTH_ENV_CONTENT }}" > envs/auth.env
-          echo "${{ secrets.CALENDAR_ENV_CONTENT }}" > envs/calendar.env
-          echo "${{ secrets.COMPETITIONS_ENV_CONTENT }}" > envs/competitions.env
-          echo "${{ secrets.MATCH_COMMENTS_ENV_CONTENT }}" > envs/match_comments.env
-          echo "${{ secrets.AUDIT_ENV_CONTENT }}" > envs/audit.env
-          echo "Arquivos .env criados."
+
+          cat << 'EOF' > jwt.env
+          ${{ secrets.JWT_ENV_CONTENT }}
+          EOF
+
+          cat << 'EOF' > envs/rabbitmq.env
+          ${{ secrets.RABBITMQ_ENV_CONTENT }}
+          EOF
+
+          cat << 'EOF' > envs/teams.env
+          ${{ secrets.TEAMS_ENV_CONTENT }}
+          EOF
+
+          cat << 'EOF' > envs/requests.env
+          ${{ secrets.REQUESTS_ENV_CONTENT }}
+          EOF
+
+          cat << 'EOF' > envs/auth.env
+          ${{ secrets.AUTH_ENV_CONTENT }}
+          EOF
+
+          cat << 'EOF' > envs/calendar.env
+          ${{ secrets.CALENDAR_ENV_CONTENT }}
+          EOF
+
+          cat << 'EOF' > envs/competitions.env
+          ${{ secrets.COMPETITIONS_ENV_CONTENT }}
+          EOF
+
+          cat << 'EOF' > envs/match_comments.env
+          ${{ secrets.MATCH_COMMENTS_ENV_CONTENT }}
+          EOF
+
+          cat << 'EOF' > envs/audit.env
+          ${{ secrets.AUDIT_ENV_CONTENT }}
+          EOF
+          
+          echo "Arquivos .env criados com sucesso."
 
       - name: Iniciar serviços com Docker Compose
         run: docker compose up -d
