@@ -9,38 +9,34 @@ paths:
       operationId: v1_campus_logs_list
       description: Retorna uma lista paginada de todos os logs de auditoria associados
         ao `campus_code` fornecido na URL.
-      summary: Lista os logs de auditoria para um campus específico.
+      summary: Lista os logs de auditoria de um campus
       parameters:
       - in: path
         name: campus_code
         schema:
           type: string
+        description: O código do campus para filtrar os logs.
         required: true
       tags:
-      - v1
+      - Auditoria
       security:
       - cookieAuth: []
       - basicAuth: []
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Log'
-          description: ''
+        '403':
+          description: Permissão negada. Apenas organizadores podem acessar.
   /api/v1/campus/{campus_code}/logs/{id}/:
     get:
       operationId: v1_campus_logs_retrieve
       description: Retorna os detalhes de um único log de auditoria, identificado
         pelo seu ID.
-      summary: Obtém um log de auditoria específico.
+      summary: Obtém um log de auditoria específico
       parameters:
       - in: path
         name: campus_code
         schema:
           type: string
+        description: O código do campus ao qual o log pertence.
         required: true
       - in: path
         name: id
@@ -50,59 +46,16 @@ paths:
         description: A UUID string identifying this log.
         required: true
       tags:
-      - v1
+      - Auditoria
       security:
       - cookieAuth: []
       - basicAuth: []
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Log'
-          description: ''
+        '403':
+          description: Permissão negada. Apenas organizadores podem acessar.
+        '404':
+          description: Log não encontrado.
 components:
-  schemas:
-    Log:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        timestamp:
-          type: string
-          format: date-time
-        campus_code:
-          type: string
-          maxLength: 50
-        user_id:
-          type: string
-          maxLength: 255
-        service_origin:
-          type: string
-          maxLength: 100
-        event_type:
-          type: string
-          maxLength: 100
-        entity_id:
-          type: string
-          maxLength: 255
-        old_data:
-          nullable: true
-        new_data:
-          nullable: true
-        ip_address:
-          type: string
-          nullable: true
-      required:
-      - campus_code
-      - entity_id
-      - event_type
-      - id
-      - service_origin
-      - timestamp
-      - user_id
   securitySchemes:
     basicAuth:
       type: http

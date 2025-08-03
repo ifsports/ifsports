@@ -251,17 +251,17 @@
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-campus-campus_code-logs-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/campus/{campus_code}/logs/</span></span><a class="headerlink" href="#get--api-v1-campus-campus_code-logs-" title="Link para esta definição">¶</a></dt>
-<dd><p><strong>Lista os logs de auditoria para um campus específico.</strong></p>
+<dd><p><strong>Lista os logs de auditoria de um campus</strong></p>
 <p>Retorna uma lista paginada de todos os logs de auditoria associados ao <cite>campus_code</cite> fornecido na URL.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>campus_code</strong> (<em>string</em>)</p></li>
+<li><p><strong>campus_code</strong> (<em>string</em>) – O código do campus para filtrar os logs.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada. Apenas organizadores podem acessar.</p></li>
 </ul>
 </dd>
 </dl>
@@ -270,18 +270,19 @@
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-campus-campus_code-logs-id-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/campus/{campus_code}/logs/{id}/</span></span><a class="headerlink" href="#get--api-v1-campus-campus_code-logs-id-" title="Link para esta definição">¶</a></dt>
-<dd><p><strong>Obtém um log de auditoria específico.</strong></p>
+<dd><p><strong>Obtém um log de auditoria específico</strong></p>
 <p>Retorna os detalhes de um único log de auditoria, identificado pelo seu ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>campus_code</strong> (<em>string</em>)</p></li>
+<li><p><strong>campus_code</strong> (<em>string</em>) – O código do campus ao qual o log pertence.</p></li>
 <li><p><strong>id</strong> (<em>string</em>) – A UUID string identifying this log.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada. Apenas organizadores podem acessar.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – Log não encontrado.</p></li>
 </ul>
 </dd>
 </dl>
