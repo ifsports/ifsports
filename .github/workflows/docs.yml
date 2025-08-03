@@ -128,7 +128,7 @@ jobs:
         run: ./coletar_docs.sh
 
       - name: Instalar dependências do Sphinx
-        run: pip install sphinx sphinxcontrib-openapi
+        run: pip install sphinx sphinxcontrib-openapi furo
 
       - name: Construir as páginas HTML com Sphinx
         run: make html
