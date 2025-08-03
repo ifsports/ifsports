@@ -83,6 +83,12 @@ services:
         methods:
           - GET
         strip_path: true
+      - name: socket-io-route
+        paths:
+          - /socket.io
+        strip_path: false 
+        plugins:
+          - name: jwt
 
   - name: teams-service
     url: http://teamsapi:8003
