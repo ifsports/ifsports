@@ -7,16 +7,18 @@ paths:
   /api/v1/campus/{campus_code}/logs/:
     get:
       operationId: v1_campus_logs_list
-      description: Retorna uma lista paginada de todos os logs...
-      summary: Lista os logs de auditoria para um campus específico.
+      description: Retorna uma lista paginada de todos os logs de auditoria associados
+        ao `campus_code` fornecido na URL.
+      summary: Lista os logs de auditoria de um campus
       parameters:
       - in: path
         name: campus_code
         schema:
           type: string
+        description: 'O código do campus para filtrar os logs (ex: "CN", "PF").'
         required: true
       tags:
-      - v1
+      - Auditoria
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -29,16 +31,20 @@ paths:
                 items:
                   $ref: '#/components/schemas/Log'
           description: ''
+        '403':
+          description: Permissão negada. Apenas organizadores podem acessar este recurso.
   /api/v1/campus/{campus_code}/logs/{id}/:
     get:
       operationId: v1_campus_logs_retrieve
-      description: Retorna os detalhes de um único log...
-      summary: Obtém um log de auditoria específico.
+      description: Retorna os detalhes de um único log de auditoria, identificado
+        pelo seu ID.
+      summary: Obtém um log de auditoria específico
       parameters:
       - in: path
         name: campus_code
         schema:
           type: string
+        description: O código do campus ao qual o log pertence.
         required: true
       - in: path
         name: id
@@ -47,8 +53,14 @@ paths:
           format: uuid
         description: A UUID string identifying this log.
         required: true
+      - in: path
+        name: pk
+        schema:
+          type: integer
+        description: O ID do registro de log.
+        required: true
       tags:
-      - v1
+      - Auditoria
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -58,13 +70,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Log'
+              examples:
+                ExemploDeLogDeCriaçãoDeCompetição:
+                  value:
+                    id: 101
+                    timestamp: '2025-08-04T20:30:00Z'
+                    campus_code: CN
+                    user_id: '20211234567890'
+                    service_origin: competitions_service
+                    event_type: competition.created
+                    entity_id: a1b2c3d4-e5f6-7890-1234-567890abcdef
+                    old_data: null
+                    new_data:
+                      name: JIFs 2025 - Futsal
+                      status: not-started
+                    ip_address: 187.55.123.98
+                  summary: Um exemplo de um log de auditoria bem-sucedido.
+                  description: Este é um exemplo de como um registro de log é retornado
+                    pela API.
           description: ''
+        '403':
+          description: Permissão negada. Apenas organizadores podem acessar este recurso.
         '404':
-          content:
-            application/json:
-              schema:
-                description: Log de auditoria não encontrado.
-          description: ''
+          description: Log não encontrado com o ID especificado.
 components:
   schemas:
     Log:
