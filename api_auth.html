@@ -252,12 +252,10 @@
 <dl class="http post">
 <dt class="sig sig-object http" id="post--api-v1-auth-logout-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/logout/</span></span><a class="headerlink" href="#post--api-v1-auth-logout-" title="Link para esta definição">¶</a></dt>
-<dd><p><strong>Registra o logout do usuário</strong></p>
-<p>Esta rota não invalida o token JWT. O cliente (frontend) é responsável por apagar os tokens armazenados localmente.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Logout recebido. O cliente deve apagar os tokens.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
 </ul>
 </dd>
 </dl>
@@ -266,14 +264,10 @@
 <dl class="http post">
 <dt class="sig sig-object http" id="post--api-v1-auth-token-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/token/</span></span><a class="headerlink" href="#post--api-v1-auth-token-" title="Link para esta definição">¶</a></dt>
-<dd><p><strong>Autentica um organizador</strong></p>
-<p>Recebe matrícula e senha e, em caso de sucesso, retorna os tokens de acesso e refresh.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a></span> – Credenciais inválidas.</p></li>
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Esta conta está desativada.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
 </ul>
 </dd>
 </dl>
@@ -296,13 +290,10 @@ token if the refresh token is valid.</p>
 <dl class="http post">
 <dt class="sig sig-object http" id="post--api-v1-auth-users-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/</span></span><a class="headerlink" href="#post--api-v1-auth-users-" title="Link para esta definição">¶</a></dt>
-<dd><p><strong>Verifica a existência de usuários por matrícula</strong></p>
-<p>Recebe uma lista de matrículas e retorna quais são válidas e quais são inválidas.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Validação bem-sucedida. O corpo da resposta contém as listas <cite>valid_ids</cite> e <cite>invalid_ids</cite>.</p></li>
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Erro na requisição, como formato de entrada inválido.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
 </ul>
 </dd>
 </dl>
@@ -311,9 +302,7 @@ token if the refresh token is valid.</p>
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-auth-users-id-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/{id}/</span></span><a class="headerlink" href="#get--api-v1-auth-users-id-" title="Link para esta definição">¶</a></dt>
-<dd><p><strong>Busca um usuário por matrícula</strong></p>
-<p>Note que o <cite>id</cite> na URL corresponde à <cite>matrícula</cite> do usuário.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>id</strong> (<em>string</em>)</p></li>
@@ -321,8 +310,7 @@ token if the refresh token is valid.</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – Usuário com a matrícula especificada não foi encontrado.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
 </ul>
 </dd>
 </dl>
@@ -331,13 +319,10 @@ token if the refresh token is valid.</p>
 <dl class="http post">
 <dt class="sig sig-object http" id="post--api-v1-auth-users-by-ids-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/by-ids/</span></span><a class="headerlink" href="#post--api-v1-auth-users-by-ids-" title="Link para esta definição">¶</a></dt>
-<dd><p><strong>Busca múltiplos usuários por matrícula</strong></p>
-<p>Recebe uma lista de matrículas e retorna os dados dos usuários encontrados.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Corpo da requisição inválido ou ausente.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
 </ul>
 </dd>
 </dl>
@@ -346,12 +331,10 @@ token if the refresh token is valid.</p>
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-auth-users-me-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/me/</span></span><a class="headerlink" href="#get--api-v1-auth-users-me-" title="Link para esta definição">¶</a></dt>
-<dd><p><strong>Retorna dados do usuário logado</strong></p>
-<p>Utiliza o token de autenticação para identificar o usuário e retornar seus dados detalhados.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
 </ul>
 </dd>
 </dl>

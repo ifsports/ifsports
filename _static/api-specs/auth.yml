@@ -7,50 +7,24 @@ paths:
   /api/v1/auth/logout/:
     post:
       operationId: v1_auth_logout_create
-      description: Esta rota não invalida o token JWT. O cliente (frontend) é responsável
-        por apagar os tokens armazenados localmente.
-      summary: Registra o logout do usuário
       tags:
-      - Autenticação
+      - v1
       security:
       - jwtAuth: []
       responses:
         '200':
-          description: Logout recebido. O cliente deve apagar os tokens.
+          description: No response body
   /api/v1/auth/token/:
     post:
       operationId: v1_auth_token_create
-      description: Recebe matrícula e senha e, em caso de sucesso, retorna os tokens
-        de acesso e refresh.
-      summary: Autentica um organizador
       tags:
-      - Autenticação
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoginRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/LoginRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/LoginRequest'
-        required: true
+      - v1
       security:
       - jwtAuth: []
       - {}
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TokenResponse'
-          description: ''
-        '401':
-          description: Credenciais inválidas.
-        '403':
-          description: Esta conta está desativada.
+          description: No response body
   /api/v1/auth/token/refresh/:
     post:
       operationId: v1_auth_token_refresh_create
@@ -81,37 +55,17 @@ paths:
   /api/v1/auth/users/:
     post:
       operationId: v1_auth_users_create
-      description: Recebe uma lista de matrículas e retorna quais são válidas e quais
-        são inválidas.
-      summary: Verifica a existência de usuários por matrícula
       tags:
-      - Usuários
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MatriculasRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/MatriculasRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/MatriculasRequest'
-        required: true
+      - v1
       security:
       - jwtAuth: []
       - {}
       responses:
         '200':
-          description: Validação bem-sucedida. O corpo da resposta contém as listas
-            `valid_ids` e `invalid_ids`.
-        '400':
-          description: Erro na requisição, como formato de entrada inválido.
+          description: No response body
   /api/v1/auth/users/{id}/:
     get:
       operationId: v1_auth_users_retrieve
-      description: Note que o `id` na URL corresponde à `matrícula` do usuário.
-      summary: Busca um usuário por matrícula
       parameters:
       - in: path
         name: id
@@ -119,93 +73,36 @@ paths:
           type: string
         required: true
       tags:
-      - Usuários
+      - v1
       security:
       - jwtAuth: []
       - {}
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-          description: ''
-        '404':
-          description: Usuário com a matrícula especificada não foi encontrado.
+          description: No response body
   /api/v1/auth/users/by-ids/:
     post:
       operationId: v1_auth_users_by_ids_create
-      description: Recebe uma lista de matrículas e retorna os dados dos usuários
-        encontrados.
-      summary: Busca múltiplos usuários por matrícula
       tags:
-      - Usuários
-      requestBody:
-        content:
-          application/json:
-            schema:
-              example:
-                ids:
-                - '20210001'
-                - '20210002'
+      - v1
       security:
       - jwtAuth: []
       - {}
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-          description: ''
-        '400':
-          description: Corpo da requisição inválido ou ausente.
+          description: No response body
   /api/v1/auth/users/me/:
     get:
       operationId: v1_auth_users_me_retrieve
-      description: Utiliza o token de autenticação para identificar o usuário e retornar
-        seus dados detalhados.
-      summary: Retorna dados do usuário logado
       tags:
-      - Usuários
+      - v1
       security:
       - jwtAuth: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-          description: ''
+          description: No response body
 components:
   schemas:
-    LoginRequest:
-      type: object
-      description: Descreve o corpo da requisição para o endpoint de login.
-      properties:
-        matricula:
-          type: string
-          description: Matrícula do organizador/usuário.
-        password:
-          type: string
-          description: Senha do organizador.
-      required:
-      - matricula
-      - password
-    MatriculasRequest:
-      type: object
-      description: Descreve o corpo da requisição para endpoints que recebem uma lista
-        de matrículas.
-      properties:
-        user_ids:
-          type: array
-          items:
-            type: string
-          description: Uma lista de strings contendo as matrículas a serem validadas.
-      required:
-      - user_ids
     TokenRefresh:
       type: object
       properties:
@@ -218,97 +115,6 @@ components:
       required:
       - access
       - refresh
-    TokenResponse:
-      type: object
-      description: Descreve a resposta bem-sucedida do endpoint de login, contendo
-        os tokens.
-      properties:
-        refresh:
-          type: string
-          readOnly: true
-          description: Token para renovar a sessão.
-        access:
-          type: string
-          readOnly: true
-          description: Token de acesso a ser usado nas requisições.
-      required:
-      - access
-      - refresh
-    User:
-      type: object
-      description: |-
-        Serializer que representa o modelo completo de um usuário.
-        Usado para retornar dados detalhados de usuários.
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        matricula:
-          type: string
-          readOnly: true
-        email:
-          type: string
-          format: email
-          readOnly: true
-        nome:
-          type: string
-          readOnly: true
-        campus:
-          type: string
-          readOnly: true
-          nullable: true
-        foto:
-          type: string
-          format: uri
-          readOnly: true
-          nullable: true
-        sexo:
-          type: string
-          readOnly: true
-          nullable: true
-        tipo_usuario:
-          type: string
-          readOnly: true
-          nullable: true
-        curso:
-          type: string
-          readOnly: true
-          nullable: true
-        situacao:
-          type: string
-          readOnly: true
-          nullable: true
-        data_nascimento:
-          type: string
-          format: date
-          readOnly: true
-          nullable: true
-        is_active:
-          type: boolean
-          readOnly: true
-        is_staff:
-          type: boolean
-          readOnly: true
-        groups:
-          type: array
-          items:
-            type: string
-          readOnly: true
-      required:
-      - campus
-      - curso
-      - data_nascimento
-      - email
-      - foto
-      - groups
-      - id
-      - is_active
-      - is_staff
-      - matricula
-      - nome
-      - sexo
-      - situacao
-      - tipo_usuario
   securitySchemes:
     jwtAuth:
       type: http
