@@ -252,11 +252,37 @@
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/</span></span><a class="headerlink" href="#get--api-v1-competitions-" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna todas as competições para um campus específico.</p>
+<dd><p><strong>Lista todas as competições de um campus</strong></p>
+<p>Retorna uma lista de todas as competições associadas a um campus específico.</p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JIFs 2025 - Futsal Masculino&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;modality&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not-started&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-09-01&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;end_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-09-15&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;system&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;league&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/media/competitions/futsal.jpg&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;min_members_per_team&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_members_per_team&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;teams_per_group&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;teams_qualified_per_group&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
-<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dt class="field-odd">Query Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><strong>campus_code</strong> (<em>string</em>) – Código do campus para filtrar as competições.
+(Required)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -265,11 +291,26 @@
 <dl class="http post">
 <dt class="sig sig-object http" id="post--api-v1-competitions-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/</span></span><a class="headerlink" href="#post--api-v1-competitions-" title="Link para esta definição">¶</a></dt>
-<dd><p>Cria uma nova competição.</p>
+<dd><p><strong>Cria uma nova competição</strong></p>
+<p>Cria uma nova competição. Apenas usuários com o papel ‘Organizador’ podem executar esta ação.</p>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JIFs 2025 - Voleibol Feminino&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;modality&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b2c3d4e5-f6a7-8901-2345-67890abcdef1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-10-01&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;end_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-10-10&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;system&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;elimination&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;min_members_per_team&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;max_members_per_team&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">201 Created</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Dados inválidos.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -278,7 +319,25 @@
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-competition_id-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/</span></span><a class="headerlink" href="#get--api-v1-competitions-competition_id-" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna uma competição específica.</p>
+<dd><p><strong>Obtém detalhes de uma competição</strong></p>
+<p>Retorna uma competição específica.</p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JIFs 2025 - Futsal Masculino&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;modality&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not-started&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;start_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-09-01&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;end_date&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-09-15&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;system&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;league&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/media/competitions/futsal.jpg&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;min_members_per_team&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;max_members_per_team&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;teams_per_group&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;teams_qualified_per_group&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -287,7 +346,8 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – Competição não encontrada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -296,7 +356,8 @@
 <dl class="http put">
 <dt class="sig sig-object http" id="put--api-v1-competitions-competition_id-">
 <span class="sig-name descname"><span class="pre">PUT</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/</span></span><a class="headerlink" href="#put--api-v1-competitions-competition_id-" title="Link para esta definição">¶</a></dt>
-<dd><p>Atualiza uma competição específica.</p>
+<dd><p><strong>Atualiza uma competição (parcial)</strong></p>
+<p>Permite a atualização de um ou mais campos de uma competição.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -305,7 +366,10 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Dados inválidos.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – Competição não encontrada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -314,7 +378,8 @@
 <dl class="http delete">
 <dt class="sig sig-object http" id="delete--api-v1-competitions-competition_id-">
 <span class="sig-name descname"><span class="pre">DELETE</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/</span></span><a class="headerlink" href="#delete--api-v1-competitions-competition_id-" title="Link para esta definição">¶</a></dt>
-<dd><p>Deleta uma competição específica.</p>
+<dd><p><strong>Deleta uma competição</strong></p>
+<p>Deleta uma competição específica.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -323,7 +388,9 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">204 No Content</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">204 No Content</a></span> – Competição deletada com sucesso.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – Competição não encontrada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -332,7 +399,8 @@
 <dl class="http patch">
 <dt class="sig sig-object http" id="patch--api-v1-competitions-competition_id-finish-">
 <span class="sig-name descname"><span class="pre">PATCH</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/finish/</span></span><a class="headerlink" href="#patch--api-v1-competitions-competition_id-finish-" title="Link para esta definição">¶</a></dt>
-<dd><p>Atualiza o status de uma competição específica.</p>
+<dd><p><strong>Finaliza uma competição</strong></p>
+<p>Altera o status de uma competição de ‘em andamento’ para ‘finalizada’. Esta rota não recebe corpo.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -341,7 +409,9 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Status da competição alterado para ‘finalizada’.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Competição já finalizada ou não iniciada.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -350,7 +420,8 @@
 <dl class="http post">
 <dt class="sig sig-object http" id="post--api-v1-competitions-competition_id-generate-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/generate/</span></span><a class="headerlink" href="#post--api-v1-competitions-competition_id-generate-" title="Link para esta definição">¶</a></dt>
-<dd><p>Gera os jogos e classificações de uma competição específica.</p>
+<dd><p><strong>Gera as fases e partidas da competição</strong></p>
+<p>Este endpoint aciona a lógica de criação de grupos, rodadas e partidas com base no sistema da competição (pontos corridos, eliminatórias, etc.). Não recebe corpo na requisição.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -359,7 +430,8 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">201 Created</a></span> – Competição gerada com sucesso.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Erro na lógica de geração (ex: número de times insuficiente).</p></li>
 </ul>
 </dd>
 </dl>
@@ -368,7 +440,8 @@
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-competition_id-matches-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/matches/</span></span><a class="headerlink" href="#get--api-v1-competitions-competition_id-matches-" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna todas as partidas de uma competição específica.</p>
+<dd><p><strong>Lista todas as partidas de uma competição</strong></p>
+<p>Retorna todas as partidas de uma competição específica.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -377,7 +450,7 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -386,7 +459,8 @@
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-competition_id-rounds-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/rounds/</span></span><a class="headerlink" href="#get--api-v1-competitions-competition_id-rounds-" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna todas as rodadas de uma competição específica.</p>
+<dd><p><strong>Lista as rodadas de uma competição</strong></p>
+<p>Retorna todas as rodadas de uma competição específica.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -395,7 +469,7 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -404,7 +478,8 @@
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-competition_id-rounds-matches">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/rounds/matches</span></span><a class="headerlink" href="#get--api-v1-competitions-competition_id-rounds-matches" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna todas as rodadas de uma competição específica.</p>
+<dd><p><strong>Lista rodadas com suas respectivas partidas</strong></p>
+<p>Retorna todas as rodadas de uma competição específica, com as informações das partidas aninhadas.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -413,7 +488,7 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -422,7 +497,8 @@
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-competition_id-standings-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/standings/</span></span><a class="headerlink" href="#get--api-v1-competitions-competition_id-standings-" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna a classificação de uma competição específica.</p>
+<dd><p><strong>Obtém a tabela de classificação da competição</strong></p>
+<p>Para competições de pontos corridos ou grupos, retorna a tabela de classificação. Para eliminatórias, retorna a árvore de partidas.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -431,7 +507,7 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -440,7 +516,8 @@
 <dl class="http patch">
 <dt class="sig sig-object http" id="patch--api-v1-competitions-competition_id-start-">
 <span class="sig-name descname"><span class="pre">PATCH</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/start/</span></span><a class="headerlink" href="#patch--api-v1-competitions-competition_id-start-" title="Link para esta definição">¶</a></dt>
-<dd><p>Atualiza o status de uma competição específica.</p>
+<dd><p><strong>Inicia uma competição</strong></p>
+<p>Altera o status de uma competição de ‘não iniciada’ para ‘em andamento’. Esta rota não recebe corpo.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -449,7 +526,9 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Status da competição alterado para ‘em andamento’.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Competição já iniciada ou finalizada.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -458,7 +537,16 @@
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-competition_id-teams-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/teams/</span></span><a class="headerlink" href="#get--api-v1-competitions-competition_id-teams-" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna todas as equipes de uma competição específica.</p>
+<dd><p><strong>Lista os times de uma competição</strong></p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d1e2f3a4-b5c6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;competition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;...dados da competição...&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -467,7 +555,7 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -476,8 +564,14 @@
 <dl class="http post">
 <dt class="sig sig-object http" id="post--api-v1-competitions-competition_id-teams-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/{competition_id}/teams/</span></span><a class="headerlink" href="#post--api-v1-competitions-competition_id-teams-" title="Link para esta definição">¶</a></dt>
-<dd><p>”
-Verifica existencia de uma equipe para uma competição específica.</p>
+<dd><p><strong>Inscreve um time em uma competição</strong></p>
+<p>Verifica se um time já está inscrito e, caso não esteja, realiza a inscrição.</p>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d1e2f3a4-b5c6-7890-1234-567890abcdef&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -486,7 +580,8 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">201 Created</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.10">409 Conflict</a></span> – O time já está inscrito.</p></li>
 </ul>
 </dd>
 </dl>
@@ -495,11 +590,18 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-matches-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/matches/</span></span><a class="headerlink" href="#get--api-v1-competitions-matches-" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna todas as partidas de todas as competições de um campus específico.</p>
+<dd><p><strong>Lista todas as partidas de um campus</strong></p>
+<p>Retorna todas as partidas de todas as competições de um campus específico.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dt class="field-odd">Query Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><strong>campus_code</strong> (<em>string</em>) – Código do campus para filtrar as partidas.
+(Required)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -508,7 +610,8 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-matches-match_id-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/matches/{match_id}/</span></span><a class="headerlink" href="#get--api-v1-competitions-matches-match_id-" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna uma partida específica de uma competição.</p>
+<dd><p><strong>Obtém detalhes de uma partida</strong></p>
+<p>Retorna uma partida específica de uma competição.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -517,7 +620,7 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -526,7 +629,8 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http put">
 <dt class="sig sig-object http" id="put--api-v1-competitions-matches-match_id-">
 <span class="sig-name descname"><span class="pre">PUT</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/matches/{match_id}/</span></span><a class="headerlink" href="#put--api-v1-competitions-matches-match_id-" title="Link para esta definição">¶</a></dt>
-<dd><p>Atualiza uma partida específica de uma competição.</p>
+<dd><p><strong>Atualiza dados de uma partida</strong></p>
+<p>Permite atualizar informações como placar, data, etc. Apenas para Organizadores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -535,7 +639,7 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -544,7 +648,15 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http patch">
 <dt class="sig sig-object http" id="patch--api-v1-competitions-matches-match_id-finish">
 <span class="sig-name descname"><span class="pre">PATCH</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/matches/{match_id}/finish</span></span><a class="headerlink" href="#patch--api-v1-competitions-matches-match_id-finish" title="Link para esta definição">¶</a></dt>
-<dd><p>Atualiza o satus de uma partida específica de uma competição para “finalizada”.</p>
+<dd><p><strong>Finaliza uma partida</strong></p>
+<p>Atualiza o status de uma partida para “finalizada” e registra o placar final.</p>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;score_home&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;score_away&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -553,7 +665,7 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Partida finalizada e placar atualizado com sucesso.</p></li>
 </ul>
 </dd>
 </dl>
@@ -562,7 +674,8 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http patch">
 <dt class="sig sig-object http" id="patch--api-v1-competitions-matches-match_id-start">
 <span class="sig-name descname"><span class="pre">PATCH</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/matches/{match_id}/start</span></span><a class="headerlink" href="#patch--api-v1-competitions-matches-match_id-start" title="Link para esta definição">¶</a></dt>
-<dd><p>Atualiza o satus de uma partida específica de uma competição para “em andamento”.</p>
+<dd><p><strong>Inicia uma partida</strong></p>
+<p>Altera o status de uma partida para ‘em andamento’. Não recebe corpo na requisição.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -571,7 +684,7 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Status da partida alterado para ‘em andamento’.</p></li>
 </ul>
 </dd>
 </dl>
@@ -580,10 +693,18 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-matches-today-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/matches/today/</span></span><a class="headerlink" href="#get--api-v1-competitions-matches-today-" title="Link para esta definição">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd><p><strong>Lista as partidas de hoje</strong></p>
+<p>Pode ser filtrada por <cite>campus_code</cite> (para ver todos os jogos do dia no campus) ou por <cite>competition_id</cite> (para ver os jogos do dia em uma competição específica).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><strong>campus_code</strong> (<em>string</em>) – (Opcional) Filtra as partidas pelo campus.</p></li>
+<li><p><strong>competition_id</strong> (<em>string</em>) – (Opcional) Filtra as partidas pela competição.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -592,7 +713,8 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-rounds-round_id-matches">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/rounds/{round_id}/matches</span></span><a class="headerlink" href="#get--api-v1-competitions-rounds-round_id-matches" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna todos os jogos de uma rodada específica</p>
+<dd><p><strong>Lista as partidas de uma rodada específica</strong></p>
+<p>Retorna todos os jogos de uma rodada específica.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -601,7 +723,7 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
 </ul>
 </dd>
 </dl>
@@ -610,7 +732,8 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-competitions-teams-team_id-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/teams/{team_id}/</span></span><a class="headerlink" href="#get--api-v1-competitions-teams-team_id-" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna uma equipe específica de uma competição específica.</p>
+<dd><p><strong>Obtém detalhes da inscrição de um time</strong></p>
+<p>Retorna uma equipe específica de uma competição específica.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -619,7 +742,9 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – Inscrição de time não encontrada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -628,7 +753,8 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http put">
 <dt class="sig sig-object http" id="put--api-v1-competitions-teams-team_id-">
 <span class="sig-name descname"><span class="pre">PUT</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/teams/{team_id}/</span></span><a class="headerlink" href="#put--api-v1-competitions-teams-team_id-" title="Link para esta definição">¶</a></dt>
-<dd><p>Atualiza uma equipe específica de uma competição específica.</p>
+<dd><p><strong>Atualiza a inscrição de um time (uso futuro)</strong></p>
+<p>Atualiza uma equipe específica de uma competição específica.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -637,7 +763,9 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Dados inválidos.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -646,7 +774,8 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http delete">
 <dt class="sig sig-object http" id="delete--api-v1-competitions-teams-team_id-">
 <span class="sig-name descname"><span class="pre">DELETE</span> </span><span class="sig-name descname"><span class="pre">/api/v1/competitions/teams/{team_id}/</span></span><a class="headerlink" href="#delete--api-v1-competitions-teams-team_id-" title="Link para esta definição">¶</a></dt>
-<dd><p>Deleta uma equipe específica de uma competição específica.</p>
+<dd><p><strong>Remove um time de uma competição</strong></p>
+<p>Deleta uma equipe específica de uma competição específica.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -655,7 +784,8 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">204 No Content</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">204 No Content</a></span> – Time removido com sucesso.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -664,11 +794,35 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-modalities-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/modalities/</span></span><a class="headerlink" href="#get--api-v1-modalities-" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna todas as modalidades para um campus específico.</p>
+<dd><p><strong>Lista todas as modalidades de um campus</strong></p>
+<p>Retorna todas as modalidades para um campus específico.</p>
+<p><strong>Exemplo de Resposta de Sucesso:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Futsal Masculino&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;campus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CN&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b2c3d4e5-f6a7-8901-2345-67890abcdef1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Voleibol Feminino&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;campus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CN&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
-<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dt class="field-odd">Query Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><strong>campus_code</strong> (<em>string</em>) – Código do campus para filtrar as modalidades (ex: CN).
+(Required)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Campus não especificado.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – Nenhuma modalidade encontrada para este campus.</p></li>
 </ul>
 </dd>
 </dl>
@@ -677,11 +831,20 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http post">
 <dt class="sig sig-object http" id="post--api-v1-modalities-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/modalities/</span></span><a class="headerlink" href="#post--api-v1-modalities-" title="Link para esta definição">¶</a></dt>
-<dd><p>Cria uma nova modalidade.</p>
+<dd><p><strong>Cria uma nova modalidade</strong></p>
+<p>Apenas usuários com o papel ‘Organizador’ podem criar modalidades. O campus da modalidade é automaticamente associado ao campus do organizador.</p>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Basquete Masculino&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">201 Created</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Dados inválidos ou modalidade já existente.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -690,16 +853,27 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http get">
 <dt class="sig sig-object http" id="get--api-v1-modalities-modality_id-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/modalities/{modality_id}/</span></span><a class="headerlink" href="#get--api-v1-modalities-modality_id-" title="Link para esta definição">¶</a></dt>
-<dd><p>Retorna uma modalidade específica para um campus específico.</p>
+<dd><p><strong>Obtém detalhes de uma modalidade</strong></p>
+<p>Retorna os detalhes de uma modalidade específica.</p>
+<p><strong>Exemplo de Resposta de Sucesso:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Futsal Masculino&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;campus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CN&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>modality_id</strong> (<em>string</em>)</p></li>
+<li><p><strong>modality_id</strong> (<em>string</em>) – ID da modalidade.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – Modalidade não encontrada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -708,16 +882,26 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http put">
 <dt class="sig sig-object http" id="put--api-v1-modalities-modality_id-">
 <span class="sig-name descname"><span class="pre">PUT</span> </span><span class="sig-name descname"><span class="pre">/api/v1/modalities/{modality_id}/</span></span><a class="headerlink" href="#put--api-v1-modalities-modality_id-" title="Link para esta definição">¶</a></dt>
-<dd><p>Atualiza uma modalidade específica.</p>
+<dd><p><strong>Atualiza uma modalidade</strong></p>
+<p>Atualiza o nome de uma modalidade específica.</p>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Futsal Masculino - Aberto&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>modality_id</strong> (<em>string</em>)</p></li>
+<li><p><strong>modality_id</strong> (<em>string</em>) – ID da modalidade.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Dados inválidos.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – Modalidade não encontrada.</p></li>
 </ul>
 </dd>
 </dl>
@@ -726,16 +910,20 @@ Verifica existencia de uma equipe para uma competição específica.</p>
 <dl class="http delete">
 <dt class="sig sig-object http" id="delete--api-v1-modalities-modality_id-">
 <span class="sig-name descname"><span class="pre">DELETE</span> </span><span class="sig-name descname"><span class="pre">/api/v1/modalities/{modality_id}/</span></span><a class="headerlink" href="#delete--api-v1-modalities-modality_id-" title="Link para esta definição">¶</a></dt>
-<dd><p>Deleta uma modalidade específica para um campus específico.</p>
+<dd><p><strong>Deleta uma modalidade</strong></p>
+<p>Deleta permanentemente uma modalidade. Esta ação não pode ser desfeita.
+<strong>Esta rota não recebe e não retorna corpo na requisição.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>modality_id</strong> (<em>string</em>)</p></li>
+<li><p><strong>modality_id</strong> (<em>string</em>) – ID da modalidade.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">204 No Content</a></span> – No response body</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">204 No Content</a></span> – Modalidade deletada com sucesso.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Permissão negada.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – Modalidade não encontrada.</p></li>
 </ul>
 </dd>
 </dl>

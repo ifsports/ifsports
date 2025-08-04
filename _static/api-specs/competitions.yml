@@ -6,27 +6,123 @@ info:
 paths:
   /api/v1/competitions/:
     get:
-      operationId: v1_competitions_retrieve
-      description: Retorna todas as competições para um campus específico.
+      operationId: v1_competitions_list
+      description: |2
+
+        Retorna uma lista de todas as competições associadas a um campus específico.
+
+        **Exemplo de Resposta:**
+
+        .. code-block:: json
+
+           [
+             {
+               "id": "c1d2e3f4-a5b6-7890-1234-567890abcdef",
+               "name": "JIFs 2025 - Futsal Masculino",
+               "modality": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+               "status": "not-started",
+               "start_date": "2025-09-01",
+               "end_date": "2025-09-15",
+               "system": "league",
+               "image": "/media/competitions/futsal.jpg",
+               "min_members_per_team": 5,
+               "max_members_per_team": 10,
+               "teams_per_group": null,
+               "teams_qualified_per_group": null
+             }
+           ]
+      summary: Lista todas as competições de um campus
+      parameters:
+      - in: query
+        name: campus_code
+        schema:
+          type: string
+        description: Código do campus para filtrar as competições.
+        required: true
       tags:
-      - v1
+      - Competições
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Competition'
+          description: ''
     post:
       operationId: v1_competitions_create
-      description: Cria uma nova competição.
+      description: |2
+
+        Cria uma nova competição. Apenas usuários com o papel 'Organizador' podem executar esta ação.
+
+        **Exemplo de Corpo da Requisição (Payload):**
+
+        .. code-block:: json
+
+           {
+             "name": "JIFs 2025 - Voleibol Feminino",
+             "modality": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+             "start_date": "2025-10-01",
+             "end_date": "2025-10-10",
+             "system": "elimination",
+             "min_members_per_team": 6,
+             "max_members_per_team": 12
+           }
+      summary: Cria uma nova competição
       tags:
-      - v1
+      - Competições
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Competition'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Competition'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Competition'
+        required: true
       responses:
-        '200':
-          description: No response body
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+          description: ''
+        '400':
+          description: Dados inválidos.
+        '403':
+          description: Permissão negada.
   /api/v1/competitions/{competition_id}/:
     get:
-      operationId: v1_competitions_retrieve_2
-      description: Retorna uma competição específica.
+      operationId: v1_competitions_retrieve
+      description: |2
+
+        Retorna uma competição específica.
+
+        **Exemplo de Resposta:**
+
+        .. code-block:: json
+
+           {
+             "id": "c1d2e3f4-a5b6-7890-1234-567890abcdef",
+             "name": "JIFs 2025 - Futsal Masculino",
+             "modality": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+             "status": "not-started",
+             "start_date": "2025-09-01",
+             "end_date": "2025-09-15",
+             "system": "league",
+             "image": "/media/competitions/futsal.jpg",
+             "min_members_per_team": 5,
+             "max_members_per_team": 10,
+             "teams_per_group": null,
+             "teams_qualified_per_group": null
+           }
+      summary: Obtém detalhes de uma competição
       parameters:
       - in: path
         name: competition_id
@@ -35,15 +131,22 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Competições
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+          description: ''
+        '404':
+          description: Competição não encontrada.
     put:
       operationId: v1_competitions_update
-      description: Atualiza uma competição específica.
+      description: Permite a atualização de um ou mais campos de uma competição.
+      summary: Atualiza uma competição (parcial)
       parameters:
       - in: path
         name: competition_id
@@ -52,13 +155,36 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Competições
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Competition'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Competition'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Competition'
+        required: true
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+          description: ''
+        '400':
+          description: Dados inválidos.
+        '403':
+          description: Permissão negada.
+        '404':
+          description: Competição não encontrada.
     delete:
       operationId: v1_competitions_destroy
       description: Deleta uma competição específica.
+      summary: Deleta uma competição
       parameters:
       - in: path
         name: competition_id
@@ -67,14 +193,20 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Competições
       responses:
         '204':
-          description: No response body
+          description: Competição deletada com sucesso.
+        '403':
+          description: Permissão negada.
+        '404':
+          description: Competição não encontrada.
   /api/v1/competitions/{competition_id}/finish/:
     patch:
       operationId: v1_competitions_finish_partial_update
-      description: Atualiza o status de uma competição específica.
+      description: Altera o status de uma competição de 'em andamento' para 'finalizada'.
+        Esta rota não recebe corpo.
+      summary: Finaliza uma competição
       parameters:
       - in: path
         name: competition_id
@@ -83,14 +215,21 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Gerenciamento de Competição
       responses:
         '200':
-          description: No response body
+          description: Status da competição alterado para 'finalizada'.
+        '400':
+          description: Competição já finalizada ou não iniciada.
+        '403':
+          description: Permissão negada.
   /api/v1/competitions/{competition_id}/generate/:
     post:
       operationId: v1_competitions_generate_create
-      description: Gera os jogos e classificações de uma competição específica.
+      description: Este endpoint aciona a lógica de criação de grupos, rodadas e partidas
+        com base no sistema da competição (pontos corridos, eliminatórias, etc.).
+        Não recebe corpo na requisição.
+      summary: Gera as fases e partidas da competição
       parameters:
       - in: path
         name: competition_id
@@ -99,14 +238,17 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Gerenciamento de Competição
       responses:
-        '200':
-          description: No response body
+        '201':
+          description: Competição gerada com sucesso.
+        '400':
+          description: 'Erro na lógica de geração (ex: número de times insuficiente).'
   /api/v1/competitions/{competition_id}/matches/:
     get:
-      operationId: v1_competitions_matches_retrieve_3
+      operationId: v1_competitions_matches_list_2
       description: Retorna todas as partidas de uma competição específica.
+      summary: Lista todas as partidas de uma competição
       parameters:
       - in: path
         name: competition_id
@@ -115,16 +257,23 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Rodadas e Partidas
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Match'
+          description: ''
   /api/v1/competitions/{competition_id}/rounds/:
     get:
-      operationId: v1_competitions_rounds_retrieve
+      operationId: v1_competitions_rounds_list
       description: Retorna todas as rodadas de uma competição específica.
+      summary: Lista as rodadas de uma competição
       parameters:
       - in: path
         name: competition_id
@@ -133,16 +282,24 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Rodadas e Partidas
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Round'
+          description: ''
   /api/v1/competitions/{competition_id}/rounds/matches:
     get:
-      operationId: v1_competitions_rounds_matches_retrieve_2
-      description: Retorna todas as rodadas de uma competição específica.
+      operationId: v1_competitions_rounds_matches_list_2
+      description: Retorna todas as rodadas de uma competição específica, com as informações
+        das partidas aninhadas.
+      summary: Lista rodadas com suas respectivas partidas
       parameters:
       - in: path
         name: competition_id
@@ -151,16 +308,24 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Rodadas e Partidas
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoundMatches'
+          description: ''
   /api/v1/competitions/{competition_id}/standings/:
     get:
-      operationId: v1_competitions_standings_retrieve
-      description: Retorna a classificação de uma competição específica.
+      operationId: v1_competitions_standings_list
+      description: Para competições de pontos corridos ou grupos, retorna a tabela
+        de classificação. Para eliminatórias, retorna a árvore de partidas.
+      summary: Obtém a tabela de classificação da competição
       parameters:
       - in: path
         name: competition_id
@@ -169,16 +334,24 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Tabelas e Classificação
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Classification'
+          description: ''
   /api/v1/competitions/{competition_id}/start/:
     patch:
       operationId: v1_competitions_start_partial_update
-      description: Atualiza o status de uma competição específica.
+      description: Altera o status de uma competição de 'não iniciada' para 'em andamento'.
+        Esta rota não recebe corpo.
+      summary: Inicia uma competição
       parameters:
       - in: path
         name: competition_id
@@ -187,14 +360,30 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Gerenciamento de Competição
       responses:
         '200':
-          description: No response body
+          description: Status da competição alterado para 'em andamento'.
+        '400':
+          description: Competição já iniciada ou finalizada.
+        '403':
+          description: Permissão negada.
   /api/v1/competitions/{competition_id}/teams/:
     get:
-      operationId: v1_competitions_teams_retrieve_2
-      description: Retorna todas as equipes de uma competição específica.
+      operationId: v1_competitions_teams_list
+      description: |2
+
+        **Exemplo de Resposta:**
+
+        .. code-block:: json
+
+           [
+             {
+               "team_id": "d1e2f3a4-b5c6-7890-1234-567890abcdef",
+               "competition": { "...dados da competição..." }
+             }
+           ]
+      summary: Lista os times de uma competição
       parameters:
       - in: path
         name: competition_id
@@ -203,17 +392,32 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Times em Competição
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompetitionTeam'
+          description: ''
     post:
       operationId: v1_competitions_teams_create
-      description: |-
-        "
-        Verifica existencia de uma equipe para uma competição específica.
+      description: |2
+
+        Verifica se um time já está inscrito e, caso não esteja, realiza a inscrição.
+
+        **Exemplo de Corpo da Requisição (Payload):**
+
+        .. code-block:: json
+
+           {
+             "team_id": "d1e2f3a4-b5c6-7890-1234-567890abcdef"
+           }
+      summary: Inscreve um time em uma competição
       parameters:
       - in: path
         name: competition_id
@@ -222,26 +426,53 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Times em Competição
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                team_id: uuid-do-time
       responses:
-        '200':
-          description: No response body
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitionTeam'
+          description: ''
+        '409':
+          description: O time já está inscrito.
   /api/v1/competitions/matches/:
     get:
-      operationId: v1_competitions_matches_retrieve
+      operationId: v1_competitions_matches_list
       description: Retorna todas as partidas de todas as competições de um campus
         específico.
+      summary: Lista todas as partidas de um campus
+      parameters:
+      - in: query
+        name: campus_code
+        schema:
+          type: string
+        description: Código do campus para filtrar as partidas.
+        required: true
       tags:
-      - v1
+      - Partidas
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Match'
+          description: ''
   /api/v1/competitions/matches/{match_id}/:
     get:
-      operationId: v1_competitions_matches_retrieve_2
+      operationId: v1_competitions_matches_retrieve
       description: Retorna uma partida específica de uma competição.
+      summary: Obtém detalhes de uma partida
       parameters:
       - in: path
         name: match_id
@@ -250,15 +481,21 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Partidas
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Match'
+          description: ''
     put:
       operationId: v1_competitions_matches_update
-      description: Atualiza uma partida específica de uma competição.
+      description: Permite atualizar informações como placar, data, etc. Apenas para
+        Organizadores.
+      summary: Atualiza dados de uma partida
       parameters:
       - in: path
         name: match_id
@@ -267,15 +504,42 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Partidas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Match'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Match'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Match'
+        required: true
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Match'
+          description: ''
   /api/v1/competitions/matches/{match_id}/finish:
     patch:
       operationId: v1_competitions_matches_finish_partial_update
-      description: Atualiza o satus de uma partida específica de uma competição para
-        "finalizada".
+      description: |2
+
+        Atualiza o status de uma partida para "finalizada" e registra o placar final.
+
+        **Exemplo de Corpo da Requisição (Payload):**
+
+        .. code-block:: json
+
+           {
+             "score_home": 3,
+             "score_away": 2
+           }
+      summary: Finaliza uma partida
       parameters:
       - in: path
         name: match_id
@@ -284,15 +548,29 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Gerenciamento de Partidas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                score_home:
+                  type: integer
+                score_away:
+                  type: integer
+              required:
+              - score_home
+              - score_away
       responses:
         '200':
-          description: No response body
+          description: Partida finalizada e placar atualizado com sucesso.
   /api/v1/competitions/matches/{match_id}/start:
     patch:
       operationId: v1_competitions_matches_start_partial_update
-      description: Atualiza o satus de uma partida específica de uma competição para
-        "em andamento".
+      description: Altera o status de uma partida para 'em andamento'. Não recebe
+        corpo na requisição.
+      summary: Inicia uma partida
       parameters:
       - in: path
         name: match_id
@@ -301,24 +579,46 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Gerenciamento de Partidas
       responses:
         '200':
-          description: No response body
+          description: Status da partida alterado para 'em andamento'.
   /api/v1/competitions/matches/today/:
     get:
-      operationId: v1_competitions_matches_today_retrieve
+      operationId: v1_competitions_matches_today_list
+      description: Pode ser filtrada por `campus_code` (para ver todos os jogos do
+        dia no campus) ou por `competition_id` (para ver os jogos do dia em uma competição
+        específica).
+      summary: Lista as partidas de hoje
+      parameters:
+      - in: query
+        name: campus_code
+        schema:
+          type: string
+        description: (Opcional) Filtra as partidas pelo campus.
+      - in: query
+        name: competition_id
+        schema:
+          type: string
+        description: (Opcional) Filtra as partidas pela competição.
       tags:
-      - v1
+      - Partidas
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Match'
+          description: ''
   /api/v1/competitions/rounds/{round_id}/matches:
     get:
-      operationId: v1_competitions_rounds_matches_retrieve
-      description: Retorna todos os jogos de uma rodada específica
+      operationId: v1_competitions_rounds_matches_list
+      description: Retorna todos os jogos de uma rodada específica.
+      summary: Lista as partidas de uma rodada específica
       parameters:
       - in: path
         name: round_id
@@ -327,16 +627,23 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Rodadas e Partidas
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Match'
+          description: ''
   /api/v1/competitions/teams/{team_id}/:
     get:
       operationId: v1_competitions_teams_retrieve
       description: Retorna uma equipe específica de uma competição específica.
+      summary: Obtém detalhes da inscrição de um time
       parameters:
       - in: path
         name: team_id
@@ -345,13 +652,22 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Times em Competição
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitionTeam'
+          description: ''
+        '403':
+          description: Permissão negada.
+        '404':
+          description: Inscrição de time não encontrada.
     put:
       operationId: v1_competitions_teams_update
       description: Atualiza uma equipe específica de uma competição específica.
+      summary: Atualiza a inscrição de um time (uso futuro)
       parameters:
       - in: path
         name: team_id
@@ -360,13 +676,34 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Times em Competição
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetitionTeam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CompetitionTeam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CompetitionTeam'
+        required: true
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitionTeam'
+          description: ''
+        '400':
+          description: Dados inválidos.
+        '403':
+          description: Permissão negada.
     delete:
       operationId: v1_competitions_teams_destroy
       description: Deleta uma equipe específica de uma competição específica.
+      summary: Remove um time de uma competição
       parameters:
       - in: path
         name: team_id
@@ -375,73 +712,473 @@ paths:
           format: uuid
         required: true
       tags:
-      - v1
+      - Times em Competição
       responses:
         '204':
-          description: No response body
+          description: Time removido com sucesso.
+        '403':
+          description: Permissão negada.
   /api/v1/modalities/:
     get:
-      operationId: v1_modalities_retrieve
-      description: Retorna todas as modalidades para um campus específico.
+      operationId: v1_modalities_list
+      description: |2
+
+        Retorna todas as modalidades para um campus específico.
+
+        **Exemplo de Resposta de Sucesso:**
+
+        .. code-block:: json
+
+           [
+             {
+               "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+               "name": "Futsal Masculino",
+               "campus": "CN"
+             },
+             {
+               "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+               "name": "Voleibol Feminino",
+               "campus": "CN"
+             }
+           ]
+      summary: Lista todas as modalidades de um campus
+      parameters:
+      - in: query
+        name: campus_code
+        schema:
+          type: string
+        description: 'Código do campus para filtrar as modalidades (ex: CN).'
+        required: true
       tags:
-      - v1
+      - Modalidades
       security:
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Modality'
+          description: ''
+        '400':
+          description: Campus não especificado.
+        '404':
+          description: Nenhuma modalidade encontrada para este campus.
     post:
       operationId: v1_modalities_create
-      description: Cria uma nova modalidade.
+      description: |2
+
+        Apenas usuários com o papel 'Organizador' podem criar modalidades. O campus da modalidade é automaticamente associado ao campus do organizador.
+
+        **Exemplo de Corpo da Requisição (Payload):**
+
+        .. code-block:: json
+
+           {
+             "name": "Basquete Masculino"
+           }
+      summary: Cria uma nova modalidade
       tags:
-      - v1
+      - Modalidades
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Modality'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Modality'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Modality'
+        required: true
       responses:
-        '200':
-          description: No response body
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modality'
+          description: ''
+        '400':
+          description: Dados inválidos ou modalidade já existente.
+        '403':
+          description: Permissão negada.
   /api/v1/modalities/{modality_id}/:
     get:
-      operationId: v1_modalities_retrieve_2
-      description: Retorna uma modalidade específica para um campus específico.
+      operationId: v1_modalities_retrieve
+      description: |2
+
+        Retorna os detalhes de uma modalidade específica.
+
+        **Exemplo de Resposta de Sucesso:**
+
+        .. code-block:: json
+
+           {
+             "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+             "name": "Futsal Masculino",
+             "campus": "CN"
+           }
+      summary: Obtém detalhes de uma modalidade
       parameters:
       - in: path
         name: modality_id
         schema:
           type: string
-          format: uuid
+        description: ID da modalidade.
         required: true
       tags:
-      - v1
+      - Modalidades
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modality'
+          description: ''
+        '403':
+          description: Permissão negada.
+        '404':
+          description: Modalidade não encontrada.
     put:
       operationId: v1_modalities_update
-      description: Atualiza uma modalidade específica.
+      description: |2
+
+        Atualiza o nome de uma modalidade específica.
+
+        **Exemplo de Corpo da Requisição (Payload):**
+
+        .. code-block:: json
+
+           {
+             "name": "Futsal Masculino - Aberto"
+           }
+      summary: Atualiza uma modalidade
       parameters:
       - in: path
         name: modality_id
         schema:
           type: string
-          format: uuid
+        description: ID da modalidade.
         required: true
       tags:
-      - v1
+      - Modalidades
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Modality'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Modality'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Modality'
+        required: true
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Modality'
+          description: ''
+        '400':
+          description: Dados inválidos.
+        '403':
+          description: Permissão negada.
+        '404':
+          description: Modalidade não encontrada.
     delete:
       operationId: v1_modalities_destroy
-      description: Deleta uma modalidade específica para um campus específico.
+      description: |2
+
+        Deleta permanentemente uma modalidade. Esta ação não pode ser desfeita.
+        **Esta rota não recebe e não retorna corpo na requisição.**
+      summary: Deleta uma modalidade
       parameters:
       - in: path
         name: modality_id
         schema:
           type: string
-          format: uuid
+        description: ID da modalidade.
         required: true
       tags:
-      - v1
+      - Modalidades
       responses:
         '204':
-          description: No response body
-components: {}
+          description: Modalidade deletada com sucesso.
+        '403':
+          description: Permissão negada.
+        '404':
+          description: Modalidade não encontrada.
+components:
+  schemas:
+    Classification:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        team:
+          type: string
+          format: uuid
+        position:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        points:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        games_played:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        wins:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        draws:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        losses:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        score_pro:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        score_against:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        score_difference:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+      required:
+      - draws
+      - games_played
+      - id
+      - losses
+      - points
+      - position
+      - score_against
+      - score_difference
+      - score_pro
+      - team
+      - wins
+    Competition:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        modality:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/CompetitionStatusEnum'
+        start_date:
+          type: string
+          format: date
+          nullable: true
+        end_date:
+          type: string
+          format: date
+          nullable: true
+        system:
+          $ref: '#/components/schemas/SystemEnum'
+        image:
+          type: string
+          format: uri
+        min_members_per_team:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        max_members_per_team:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        teams_per_group:
+          type: integer
+          nullable: true
+        teams_qualified_per_group:
+          type: integer
+          nullable: true
+      required:
+      - id
+      - image
+      - min_members_per_team
+      - modality
+      - name
+      - system
+    CompetitionStatusEnum:
+      enum:
+      - not-started
+      - in-progress
+      - finished
+      type: string
+      description: |-
+        * `not-started` - Not Started
+        * `in-progress` - In Progress
+        * `finished` - Finished
+    CompetitionTeam:
+      type: object
+      properties:
+        team_id:
+          type: string
+          format: uuid
+          readOnly: true
+        competition:
+          $ref: '#/components/schemas/Competition'
+      required:
+      - competition
+      - team_id
+    Match:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        competition:
+          type: string
+          format: uuid
+        group:
+          type: string
+          format: uuid
+        round:
+          type: string
+          format: uuid
+          nullable: true
+        round_match_number:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        status:
+          $ref: '#/components/schemas/MatchStatusEnum'
+        scheduled_datetime:
+          type: string
+          format: date-time
+          nullable: true
+        team_home:
+          allOf:
+          - $ref: '#/components/schemas/CompetitionTeam'
+          readOnly: true
+        team_away:
+          allOf:
+          - $ref: '#/components/schemas/CompetitionTeam'
+          readOnly: true
+        team_home_id:
+          type: string
+          format: uuid
+          writeOnly: true
+          nullable: true
+        team_away_id:
+          type: string
+          format: uuid
+          writeOnly: true
+          nullable: true
+        score_home:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        score_away:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        winner:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - competition
+      - id
+      - round_match_number
+      - team_away
+      - team_home
+    MatchStatusEnum:
+      enum:
+      - not-started
+      - in-progress
+      - finished
+      type: string
+      description: |-
+        * `not-started` - Não iniciado
+        * `in-progress` - Em andamento
+        * `finished` - Finalizado
+    Modality:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        campus:
+          type: string
+          maxLength: 10
+      required:
+      - campus
+      - id
+      - name
+    Round:
+      type: object
+      description: Returns rounds for a given competition.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+      required:
+      - id
+      - name
+    RoundMatches:
+      type: object
+      description: |-
+        '
+        Returns rounds and matches for a given round.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/Match'
+          readOnly: true
+      required:
+      - id
+      - matches
+      - name
+    SystemEnum:
+      enum:
+      - league
+      - groups_elimination
+      - elimination
+      type: string
+      description: |-
+        * `league` - League
+        * `groups_elimination` - Groups + Elimination
+        * `elimination` - Elimination Only
