@@ -1,10 +1,6 @@
 API de Solicitações
 ===================
 
-Para explorar os endpoints e testar as rotas ao vivo, acesse a documentação interativa do FastAPI.
+Documentação para o serviço de gerenciamento de solicitações diversas.
 
-.. raw:: html
-
-   <a href="|base_url|/requests/docs" target="_blank" class="redirect-button">
-      Abrir Documentação Interativa (Requests Service)
-   </a>
+.. openapi:: _static/api-specs/requests.yml

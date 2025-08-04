@@ -10,7 +10,6 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=acfd86a5" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=25af2a20" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ec4a6cd2" />
     
     
 
@@ -249,10 +248,67 @@
         <article role="main" id="furo-main-content">
           <section id="api-de-calendario">
 <h1>API de Calendário<a class="headerlink" href="#api-de-calendario" title="Link para este cabeçalho">¶</a></h1>
-<p>Para explorar os endpoints e testar as rotas ao vivo, acesse a documentação interativa do FastAPI.</p>
-<a href="|base_url|/calendar/docs" target="_blank" class="redirect-button">
-   Abrir Documentação Interativa (Calendar Service)
-</a></section>
+<p>Documentação para o serviço de agendamento e calendário de jogos.</p>
+<dl class="http get">
+<dt class="sig sig-object http" id="get--api-v1-calendar-auth-login">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/calendar/auth/login</span></span><a class="headerlink" href="#get--api-v1-calendar-auth-login" title="Link para esta definição">¶</a></dt>
+<dd><p><strong>Get Auth Url</strong></p>
+<p>Endpoint para o frontend obter a URL de autorização do Google.
+O frontend deve redirecionar o usuário para esta URL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_email</strong> (<em>string</em>) – (Required)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Successful Response</p></li>
+<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – Validation Error</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt class="sig sig-object http" id="get--api-v1-calendar-auth-callback">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/calendar/auth/callback</span></span><a class="headerlink" href="#get--api-v1-calendar-auth-callback" title="Link para esta definição">¶</a></dt>
+<dd><p><strong>Auth Callback</strong></p>
+<p>Endpoint de callback. O Google redireciona o usuário para cá após o login.
+Este endpoint não deve ser chamado diretamente pelo frontend.
+O email do usuário precisa ser passado de alguma forma, o <cite>state</cite> é ideal para isso.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>code</strong> (<em>string</em>) – (Required)</p></li>
+<li><p><strong>state</strong> (<em>{'string', 'null'}</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Successful Response</p></li>
+<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – Validation Error</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt class="sig sig-object http" id="post--api-v1-calendar-events">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/calendar/events</span></span><a class="headerlink" href="#post--api-v1-calendar-events" title="Link para esta definição">¶</a></dt>
+<dd><p><strong>Create Event</strong></p>
+<p>Cria um evento na agenda do usuário. Requer que o usuário já tenha autenticado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Successful Response</p></li>
+<li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – Validation Error</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 
         </article>
       </div>

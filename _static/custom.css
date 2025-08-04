@@ -1,7 +1,0 @@
-.redirect-button {
-    display: inline-block; padding: 12px 24px; margin: 20px 0;
-    border-radius: 5px; background-color: #2c8ed8; color: white !important;
-    font-weight: bold; text-decoration: none; text-align: center;
-    transition: background-color 0.2s ease;
-}
-.redirect-button:hover { background-color: #2270a9; }

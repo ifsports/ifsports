@@ -1,10 +1,6 @@
 API de Times
 ============
 
-Para explorar os endpoints e testar as rotas ao vivo, acesse a documentação interativa do FastAPI.
+Documentação para o serviço de gerenciamento de equipes e jogadores.
 
-.. raw:: html
-
-   <a href="|base_url|/teams/docs" target="_blank" class="redirect-button">
-      Abrir Documentação Interativa (Teams Service)
-   </a>
+.. openapi:: _static/api-specs/teams.yml

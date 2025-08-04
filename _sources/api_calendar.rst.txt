@@ -1,10 +1,6 @@
 API de Calendário
 =================
 
-Para explorar os endpoints e testar as rotas ao vivo, acesse a documentação interativa do FastAPI.
+Documentação para o serviço de agendamento e calendário de jogos.
 
-.. raw:: html
-
-   <a href="|base_url|/calendar/docs" target="_blank" class="redirect-button">
-      Abrir Documentação Interativa (Calendar Service)
-   </a>
+.. openapi:: _static/api-specs/calendar.yml

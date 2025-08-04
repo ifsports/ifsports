@@ -10,7 +10,6 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=acfd86a5" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=25af2a20" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ec4a6cd2" />
     
     
 
@@ -249,10 +248,99 @@
         <article role="main" id="furo-main-content">
           <section id="api-de-autenticacao">
 <h1>API de Autenticação<a class="headerlink" href="#api-de-autenticacao" title="Link para este cabeçalho">¶</a></h1>
-<p>Para explorar os endpoints e testar as rotas ao vivo, acesse a documentação interativa do Swagger UI.</p>
-<a href="|base_url|/auth/api/docs/" target="_blank" class="redirect-button">
-   Abrir Documentação Interativa (Auth Service)
-</a></section>
+<p>Esta é a documentação técnica gerada automaticamente para o serviço de autenticação e gerenciamento de usuários.</p>
+<dl class="http post">
+<dt class="sig sig-object http" id="post--api-v1-auth-logout-">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/logout/</span></span><a class="headerlink" href="#post--api-v1-auth-logout-" title="Link para esta definição">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt class="sig sig-object http" id="post--api-v1-auth-token-">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/token/</span></span><a class="headerlink" href="#post--api-v1-auth-token-" title="Link para esta definição">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt class="sig sig-object http" id="post--api-v1-auth-token-refresh-">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/token/refresh/</span></span><a class="headerlink" href="#post--api-v1-auth-token-refresh-" title="Link para esta definição">¶</a></dt>
+<dd><p>Takes a refresh type JSON web token and returns an access type JSON web
+token if the refresh token is valid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt class="sig sig-object http" id="post--api-v1-auth-users-">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/</span></span><a class="headerlink" href="#post--api-v1-auth-users-" title="Link para esta definição">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt class="sig sig-object http" id="get--api-v1-auth-users-id-">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/{id}/</span></span><a class="headerlink" href="#get--api-v1-auth-users-id-" title="Link para esta definição">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt class="sig sig-object http" id="post--api-v1-auth-users-by-ids-">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/by-ids/</span></span><a class="headerlink" href="#post--api-v1-auth-users-by-ids-" title="Link para esta definição">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt class="sig sig-object http" id="get--api-v1-auth-users-me-">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/me/</span></span><a class="headerlink" href="#get--api-v1-auth-users-me-" title="Link para esta definição">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Status Codes<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – No response body</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 
         </article>
       </div>

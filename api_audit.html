@@ -10,7 +10,6 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=acfd86a5" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=25af2a20" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=ec4a6cd2" />
     
     
 
@@ -249,10 +248,47 @@
         <article role="main" id="furo-main-content">
           <section id="api-de-auditoria">
 <h1>API de Auditoria<a class="headerlink" href="#api-de-auditoria" title="Link para este cabeçalho">¶</a></h1>
-<p>Para explorar os endpoints e testar as rotas ao vivo, acesse a documentação interativa do Swagger UI.</p>
-<a href="|base_url|/audit/api/docs/" target="_blank" class="redirect-button">
-   Abrir Documentação Interativa (Audit Service)
-</a></section>
+<dl class="http get">
+<dt class="sig sig-object http" id="get--api-v1-campus-campus_code-logs-">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/campus/{campus_code}/logs/</span></span><a class="headerlink" href="#get--api-v1-campus-campus_code-logs-" title="Link para esta definição">¶</a></dt>
+<dd><p><strong>Lista os logs de auditoria para um campus específico.</strong></p>
+<p>Retorna uma lista paginada de todos os logs…</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>campus_code</strong> (<em>string</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt class="sig sig-object http" id="get--api-v1-campus-campus_code-logs-id-">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/campus/{campus_code}/logs/{id}/</span></span><a class="headerlink" href="#get--api-v1-campus-campus_code-logs-id-" title="Link para esta definição">¶</a></dt>
+<dd><p><strong>Obtém um log de auditoria específico.</strong></p>
+<p>Retorna os detalhes de um único log…</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>campus_code</strong> (<em>string</em>)</p></li>
+<li><p><strong>id</strong> (<em>string</em>) – A UUID string identifying this log.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – </p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 
         </article>
       </div>
