@@ -7,24 +7,58 @@ paths:
   /api/v1/auth/logout/:
     post:
       operationId: v1_auth_logout_create
+      description: |2
+
+        Este endpoint apenas registra a intenção de logout para fins de auditoria.
+        O cliente (frontend) é responsável por apagar os tokens armazenados localmente para efetivar o logout.
+
+        **Esta rota não recebe corpo na requisição.**
+      summary: Registra o evento de logout do usuário.
       tags:
-      - v1
+      - Autenticação
       security:
       - jwtAuth: []
       responses:
         '200':
-          description: No response body
+          description: Logout recebido. O cliente deve apagar os tokens.
+        '401':
+          description: Não autenticado.
   /api/v1/auth/token/:
     post:
       operationId: v1_auth_token_create
+      description: |2
+
+        Autentica um usuário (geralmente um organizador) com base na matrícula e senha locais.
+        Não é utilizado por alunos/jogadores, que devem logar via SUAP.
+
+        **Exemplo de Corpo da Requisição (Payload):**
+        .. code-block:: json
+
+           {
+             "matricula": "20210000000001",
+             "password": "senha_forte_123"
+           }
+
+        **Exemplo de Resposta de Sucesso:**
+        .. code-block:: json
+
+           {
+             "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+             "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+           }
+      summary: Autentica um organizador via matrícula e senha.
       tags:
-      - v1
+      - Autenticação
       security:
       - jwtAuth: []
       - {}
       responses:
         '200':
-          description: No response body
+          description: Autenticação bem-sucedida. Retorna os tokens de acesso e refresh.
+        '401':
+          description: Credenciais inválidas.
+        '403':
+          description: Esta conta está desativada.
   /api/v1/auth/token/refresh/:
     post:
       operationId: v1_auth_token_refresh_create
@@ -55,17 +89,32 @@ paths:
   /api/v1/auth/users/:
     post:
       operationId: v1_auth_users_create
+      description: |2
+
+        Recebe uma lista de matrículas e retorna quais são válidas (existem no banco) e quais são inválidas.
+
+        **Exemplo de Corpo da Requisição (Payload):**
+        .. code-block:: json
+
+           {
+             "user_ids": ["20210001", "20210002", "matricula_invalida"]
+           }
+      summary: Verifica a existência de usuários por matrícula.
       tags:
-      - v1
+      - Usuários
       security:
       - jwtAuth: []
       - {}
       responses:
         '200':
-          description: No response body
+          description: Validação concluída com sucesso.
+        '400':
+          description: Erro na requisição, como formato de entrada inválido.
   /api/v1/auth/users/{id}/:
     get:
       operationId: v1_auth_users_retrieve
+      description: Note que o `id` na URL corresponde à `matrícula` do usuário.
+      summary: Busca os dados de um usuário específico por matrícula.
       parameters:
       - in: path
         name: id
@@ -73,34 +122,68 @@ paths:
           type: string
         required: true
       tags:
-      - v1
+      - Usuários
       security:
       - jwtAuth: []
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '404':
+          description: Usuário com a matrícula especificada não foi encontrado.
   /api/v1/auth/users/by-ids/:
     post:
       operationId: v1_auth_users_by_ids_create
+      description: |2
+
+        Recebe uma lista de matrículas e retorna uma lista com os dados dos usuários encontrados.
+
+        **Exemplo de Corpo da Requisição (Payload):**
+        .. code-block:: json
+
+           {
+             "ids": ["20210001", "20210002"]
+           }
+      summary: Busca múltiplos usuários por uma lista de matrículas.
       tags:
-      - v1
+      - Usuários
       security:
       - jwtAuth: []
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+        '400':
+          description: Corpo da requisição inválido ou ausente.
   /api/v1/auth/users/me/:
     get:
       operationId: v1_auth_users_me_retrieve
+      description: Utiliza o token de autenticação enviado no header para identificar
+        o usuário e retornar seus dados detalhados.
+      summary: Retorna os dados do usuário atualmente autenticado.
       tags:
-      - v1
+      - Usuários
       security:
       - jwtAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '401':
+          description: Não autenticado.
 components:
   schemas:
     TokenRefresh:
@@ -115,6 +198,76 @@ components:
       required:
       - access
       - refresh
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        matricula:
+          type: string
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+        nome:
+          type: string
+          maxLength: 150
+        campus:
+          type: string
+          readOnly: true
+          nullable: true
+        foto:
+          type: string
+          format: uri
+          readOnly: true
+          nullable: true
+        sexo:
+          type: string
+          readOnly: true
+          nullable: true
+        tipo_usuario:
+          type: string
+          readOnly: true
+          nullable: true
+        curso:
+          type: string
+          readOnly: true
+          nullable: true
+        situacao:
+          type: string
+          readOnly: true
+          nullable: true
+        data_nascimento:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+        is_active:
+          type: boolean
+        is_staff:
+          type: boolean
+          readOnly: true
+        groups:
+          type: array
+          items:
+            type: string
+          readOnly: true
+      required:
+      - campus
+      - curso
+      - data_nascimento
+      - email
+      - foto
+      - groups
+      - id
+      - is_staff
+      - matricula
+      - nome
+      - sexo
+      - situacao
+      - tipo_usuario
   securitySchemes:
     jwtAuth:
       type: http
