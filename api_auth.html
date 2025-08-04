@@ -270,32 +270,25 @@ O cliente (frontend) é responsável por apagar os tokens armazenados localmente
 <dt class="sig sig-object http" id="post--api-v1-auth-token-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/token/</span></span><a class="headerlink" href="#post--api-v1-auth-token-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Autentica um organizador via matrícula e senha.</strong></p>
-<p>Autentica um usuário (geralmente um organizador) com base na matrícula e senha locais.
-Não é utilizado por alunos/jogadores, que devem logar via SUAP.</p>
-<p><strong>Exemplo de Corpo da Requisição (Payload):</strong>
-.. code-block:: json</p>
-<blockquote>
-<div><dl class="simple">
-<dt>{</dt><dd><p>“matricula”: “20210000000001”,
-“password”: “senha_forte_123”</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
-<p><strong>Exemplo de Resposta de Sucesso:</strong>
-.. code-block:: json</p>
-<blockquote>
-<div><dl class="simple">
-<dt>{</dt><dd><p>“refresh”: “eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…”,
-“access”: “eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…”</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
+<p>Autentica um usuário (geralmente um organizador) com base na matrícula e senha locais.</p>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;matricula&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20210000000001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;senha_forte_123&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Exemplo de Resposta de Sucesso:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;refresh&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;access&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Autenticação bem-sucedida. Retorna os tokens de acesso e refresh.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Autenticação bem-sucedida. Retorna os tokens.</p></li>
 <li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">401 Unauthorized</a></span> – Credenciais inválidas.</p></li>
 <li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – Esta conta está desativada.</p></li>
 </ul>
@@ -321,21 +314,27 @@ token if the refresh token is valid.</p>
 <dt class="sig sig-object http" id="post--api-v1-auth-users-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/</span></span><a class="headerlink" href="#post--api-v1-auth-users-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Verifica a existência de usuários por matrícula.</strong></p>
-<p>Recebe uma lista de matrículas e retorna quais são válidas (existem no banco) e quais são inválidas.</p>
-<p><strong>Exemplo de Corpo da Requisição (Payload):</strong>
-.. code-block:: json</p>
-<blockquote>
-<div><dl class="simple">
-<dt>{</dt><dd><p>“user_ids”: [“20210001”, “20210002”, “matricula_invalida”]</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
+<p>Recebe uma lista de matrículas e retorna quais são válidas e quais são inválidas.</p>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;user_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;20210001&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;20210002&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;matricula_invalida&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;all_exist&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;As seguintes matrículas não foram encontradas: matricula_invalida&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;valid_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;20210001&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;20210002&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;invalid_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;matricula_invalida&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Validação concluída com sucesso.</p></li>
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Erro na requisição, como formato de entrada inválido.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Validação concluída.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – Erro no formato da requisição.</p></li>
 </ul>
 </dd>
 </dl>
@@ -346,6 +345,25 @@ token if the refresh token is valid.</p>
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/{id}/</span></span><a class="headerlink" href="#get--api-v1-auth-users-id-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Busca os dados de um usuário específico por matrícula.</strong></p>
 <p>Note que o <cite>id</cite> na URL corresponde à <cite>matrícula</cite> do usuário.</p>
+<p><strong>Exemplo de Resposta de Sucesso:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4...&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;matricula&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20210002&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;outro@exemplo.com&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nome&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Outro Usuário&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;campus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PF&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;foto&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://url.da.foto/outra.png&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;sexo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;F&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;tipo_usuario&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SERVIDOR&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;curso&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;situacao&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ativo&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;data_nascimento&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1990-05-15&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;is_active&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;is_staff&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Organizador&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -366,15 +384,12 @@ token if the refresh token is valid.</p>
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/by-ids/</span></span><a class="headerlink" href="#post--api-v1-auth-users-by-ids-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Busca múltiplos usuários por uma lista de matrículas.</strong></p>
 <p>Recebe uma lista de matrículas e retorna uma lista com os dados dos usuários encontrados.</p>
-<p><strong>Exemplo de Corpo da Requisição (Payload):</strong>
-.. code-block:: json</p>
-<blockquote>
-<div><dl class="simple">
-<dt>{</dt><dd><p>“ids”: [“20210001”, “20210002”]</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;20210001&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;20210002&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -389,7 +404,26 @@ token if the refresh token is valid.</p>
 <dt class="sig sig-object http" id="get--api-v1-auth-users-me-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/auth/users/me/</span></span><a class="headerlink" href="#get--api-v1-auth-users-me-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Retorna os dados do usuário atualmente autenticado.</strong></p>
-<p>Utiliza o token de autenticação enviado no header para identificar o usuário e retornar seus dados detalhados.</p>
+<p>Utiliza o token de autenticação enviado no header para identificar o usuário.</p>
+<p><strong>Exemplo de Resposta de Sucesso:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;matricula&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20221094040022&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;usuario@exemplo.com&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;nome&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Nome do Usuário&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;campus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CN&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;foto&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://url.da.foto/imagem.png&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;sexo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;M&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;tipo_usuario&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ALUNO&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;curso&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Técnico em Informática&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;situacao&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Matriculado&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;data_nascimento&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2005-10-20&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;is_active&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;is_staff&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Jogador&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
