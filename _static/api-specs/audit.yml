@@ -7,8 +7,45 @@ paths:
   /api/v1/campus/{campus_code}/logs/:
     get:
       operationId: v1_campus_logs_list
-      description: Retorna uma lista paginada de todos os logs de auditoria associados
-        ao `campus_code` fornecido na URL.
+      description: |2
+
+        Retorna uma lista paginada de todos os logs de auditoria associados ao `campus_code` fornecido na URL.
+
+        **Exemplo de Resposta:**
+
+        .. code-block:: json
+
+           [
+             {
+               "id": 101,
+               "timestamp": "2025-08-04T20:30:00Z",
+               "campus_code": "CN",
+               "user_id": "20211234567890",
+               "service_origin": "competitions_service",
+               "event_type": "competition.created",
+               "entity_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+               "old_data": null,
+               "new_data": {
+                 "name": "JIFs 2025 - Futsal",
+                 "status": "not-started"
+               },
+               "ip_address": "187.55.123.98"
+             },
+             {
+               "id": 100,
+               "timestamp": "2025-08-04T19:15:00Z",
+               "campus_code": "CN",
+               "user_id": "20200987654321",
+               "service_origin": "auth_service",
+               "event_type": "auth.login",
+               "entity_id": "20200987654321",
+               "old_data": null,
+               "new_data": {
+                 "message": "Organizador logou com sucesso."
+               },
+               "ip_address": "177.22.45.67"
+             }
+           ]
       summary: Lista os logs de auditoria de um campus
       parameters:
       - in: path
