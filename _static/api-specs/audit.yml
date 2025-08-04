@@ -7,7 +7,8 @@ paths:
   /api/v1/campus/{campus_code}/logs/:
     get:
       operationId: v1_campus_logs_list
-      description: Retorna uma lista paginada de todos os logs...
+      description: Retorna uma lista paginada de todos os logs de auditoria associados
+        ao `campus_code` fornecido na URL.
       summary: Lista os logs de auditoria para um campus específico.
       parameters:
       - in: path
@@ -20,6 +21,7 @@ paths:
       security:
       - cookieAuth: []
       - basicAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -32,7 +34,8 @@ paths:
   /api/v1/campus/{campus_code}/logs/{id}/:
     get:
       operationId: v1_campus_logs_retrieve
-      description: Retorna os detalhes de um único log...
+      description: Retorna os detalhes de um único log de auditoria, identificado
+        pelo seu ID.
       summary: Obtém um log de auditoria específico.
       parameters:
       - in: path
@@ -52,18 +55,13 @@ paths:
       security:
       - cookieAuth: []
       - basicAuth: []
+      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Log'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                description: Log de auditoria não encontrado.
           description: ''
 components:
   schemas:

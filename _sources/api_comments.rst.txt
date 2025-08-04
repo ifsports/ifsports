@@ -1,6 +1,10 @@
 API de Comentários
 ==================
 
-Documentação para o serviço de comentários de partidas em tempo real.
+Para explorar os endpoints e testar as rotas ao vivo, acesse a documentação interativa do FastAPI.
 
-.. openapi:: _static/api-specs/comments.yml
+.. raw:: html
+
+   <a href="|base_url|/comments/docs" target="_blank" class="redirect-button">
+      Abrir Documentação Interativa (Comments Service)
+   </a>

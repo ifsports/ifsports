@@ -1,4 +1,10 @@
 API de Auditoria
 ================
 
-.. openapi:: _static/api-specs/audit.yml
+Para explorar os endpoints e testar as rotas ao vivo, acesse a documentação interativa do Swagger UI.
+
+.. raw:: html
+
+   <a href="|base_url|/audit/api/docs/" target="_blank" class="redirect-button">
+      Abrir Documentação Interativa (Audit Service)
+   </a>

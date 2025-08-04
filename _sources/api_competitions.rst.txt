@@ -1,6 +1,10 @@
 API de Competições
 ==================
 
-Esta é a documentação técnica gerada automaticamente para o serviço de competições, modalidades e jogos.
+Para explorar os endpoints e testar as rotas ao vivo, acesse a documentação interativa do Swagger UI.
 
-.. openapi:: _static/api-specs/competitions.yml
+.. raw:: html
+
+   <a href="|base_url|/competitions/api/docs/" target="_blank" class="redirect-button">
+      Abrir Documentação Interativa (Competitions Service)
+   </a>
