@@ -86,7 +86,8 @@ services:
       - name: socket-io-route
         paths:
           - /socket.io
-        strip_path: false 
+          - /socket.io/
+        strip_path: false
         plugins:
           - name: jwt
 
