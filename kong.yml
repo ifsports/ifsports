@@ -42,7 +42,7 @@ services:
         methods:
           - GET
         paths:
-          - /api/v1/auth/users/.+
+          - /api/v1/auth/users/
         strip_path: false
         preserve_host: true
       - name: auth-public-schema
