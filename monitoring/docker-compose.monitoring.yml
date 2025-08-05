@@ -26,6 +26,24 @@ services:
       - prometheus
     restart: unless-stopped
 
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100"
+    networks:
+      - app-network
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./monitoring/promtail-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - app-network
+
   postgres-exporter-teams:
     image: prometheuscommunity/postgres-exporter
     container_name: postgres-exporter-teams
