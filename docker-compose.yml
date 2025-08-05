@@ -21,7 +21,7 @@ services:
       start_period: 30s
 
   db_teams:
-    build: ./postgres
+    image: postgres:15
     container_name: db_teams
     env_file:
       - ./envs/teams.env
@@ -31,14 +31,6 @@ services:
       - dados_postgres_teams:/var/lib/postgresql/data
     networks:
       - app-network
-    command:
-      - "postgres"
-      - "-c"
-      - "shared_preload_libraries=pgaudit"
-      - "-c"
-      - "pgaudit.log=all"
-      - "-c"
-      - "log_statement=all"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres -d db_teams" ]
       interval: 10s
@@ -65,7 +57,7 @@ services:
       - "8003"
 
   db_requests:
-    build: ./postgres
+    image: postgres:15
     container_name: db_requests
     env_file:
       - ./envs/requests.env
@@ -75,14 +67,6 @@ services:
       - dados_postgres_requests:/var/lib/postgresql/data
     networks:
       - app-network
-    command:
-      - "postgres"
-      - "-c"
-      - "shared_preload_libraries=pgaudit"
-      - "-c"
-      - "pgaudit.log=all"
-      - "-c"
-      - "log_statement=all"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U IntegradorEstelar_42 -d db_requests" ]
       interval: 10s
@@ -109,7 +93,7 @@ services:
       - "8001"
 
   db_auth:
-    build: ./postgres
+    image: postgres:15
     container_name: db_auth
     env_file:
       - ./envs/auth.env
@@ -119,14 +103,6 @@ services:
       - dados_postgres_auth:/var/lib/postgresql/data
     networks:
       - app-network
-    command:
-      - "postgres"
-      - "-c"
-      - "shared_preload_libraries=pgaudit"
-      - "-c"
-      - "pgaudit.log=all"
-      - "-c"
-      - "log_statement=all"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U auth_user -d auth_db" ]
       interval: 10s
@@ -153,7 +129,7 @@ services:
       - "8000"
 
   db_calendar:
-    build: ./postgres
+    image: postgres:15
     container_name: db_calendar
     env_file:
       - ./envs/calendar.env
@@ -163,14 +139,6 @@ services:
       - dados_postgres_calendar:/var/lib/postgresql/data
     networks:
       - app-network
-    command:
-      - "postgres"
-      - "-c"
-      - "shared_preload_libraries=pgaudit"
-      - "-c"
-      - "pgaudit.log=all"
-      - "-c"
-      - "log_statement=all"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U IntegradorMundial_87 -d db_calendar" ]
       interval: 10s
@@ -194,7 +162,7 @@ services:
       - "8012"
 
   db_competitions:
-    build: ./postgres
+    image: postgres:15
     container_name: db_competitions
     env_file:
       - ./envs/competitions.env
@@ -204,14 +172,6 @@ services:
       - dados_postgres_competition:/var/lib/postgresql/data
     networks:
       - app-network
-    command:
-      - "postgres"
-      - "-c"
-      - "shared_preload_libraries=pgaudit"
-      - "-c"
-      - "pgaudit.log=all"
-      - "-c"
-      - "log_statement=all"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U IntegradorGalatico_77 -d db_competitions" ]
       interval: 10s
@@ -254,7 +214,7 @@ services:
       - app-network
 
   db_match_comments:
-    build: ./postgres
+    image: postgres:15
     container_name: db_match_comments
     env_file:
       - ./envs/match_comments.env
@@ -264,14 +224,6 @@ services:
       - dados_postgres_match_comments:/var/lib/postgresql/data
     networks:
       - app-network
-    command:
-      - "postgres"
-      - "-c"
-      - "shared_preload_libraries=pgaudit"
-      - "-c"
-      - "pgaudit.log=all"
-      - "-c"
-      - "log_statement=all"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U IntegradorInternacional_94 -d db_match_comments" ]
       interval: 10s
@@ -347,7 +299,7 @@ services:
       - app-network
       
   db_audit:
-    build: ./postgres
+    image: postgres:15
     container_name: db_audit
     env_file:
       - ./envs/audit.env
@@ -357,14 +309,6 @@ services:
       - dados_postgres_audit:/var/lib/postgresql/data/
     networks:
       - app-network
-    command:
-      - "postgres"
-      - "-c"
-      - "shared_preload_libraries=pgaudit"
-      - "-c"
-      - "pgaudit.log=all"
-      - "-c"
-      - "log_statement=all"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U audit_user -d audit_db" ]
       interval: 10s
