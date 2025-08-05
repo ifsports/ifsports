@@ -253,11 +253,51 @@
 <dt class="sig sig-object http" id="get--api-v1-teams-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/teams/</span></span><a class="headerlink" href="#get--api-v1-teams-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Get Teams By Campus</strong></p>
+<p>List Teams By Campus</p>
+<p>Lista as equipes, com diferentes comportamentos baseados na autenticação e no papel do usuário.</p>
+<ul class="simple">
+<li><p><strong>Usuário não autenticado</strong>: Deve fornecer o parâmetro <cite>campus</cite>.</p></li>
+<li><p><strong>Usuário autenticado (Jogador)</strong>: Lista apenas as equipes das quais o usuário faz parte no seu campus.</p></li>
+<li><p><strong>Usuário autenticado (não Jogador)</strong>: Lista todas as equipes do campus do usuário.</p></li>
+<li><p>É possível filtrar por status da equipe (ex: <cite>approved</cite>, <cite>pending</cite>).</p></li>
+</ul>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Titãs do Futsal&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;abbreviation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TTF&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;approved&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;campus_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NAT-CN&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;members&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20231012030011&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20231012030015&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b2c3d4e5-f6a7-b8c9-d0e1-f2a3b4c5d6e7&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Guerreiros do Vôlei&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;abbreviation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDV&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pending&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;campus_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NAT-CN&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;members&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20241012030020&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Query Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>status</strong> (<em>{'string', 'null'}</em>) – Filtrar equipes por status</p></li>
-<li><p><strong>campus</strong> (<em>{'string', 'null'}</em>) – Filtrar equipes por campus</p></li>
+<li><p><strong>status</strong> (<em>{'null', 'string'}</em>) – Filtrar equipes por status</p></li>
+<li><p><strong>campus</strong> (<em>{'null', 'string'}</em>) – Filtrar equipes por campus</p></li>
 </ul>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
@@ -273,6 +313,37 @@
 <dt class="sig sig-object http" id="post--api-v1-teams-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/teams/</span></span><a class="headerlink" href="#post--api-v1-teams-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Create Team In Campus</strong></p>
+<p>Create Team In Campus</p>
+<p>Cria uma nova equipe e envia para aprovação. O processo envolve múltiplas validações:</p>
+<ul class="simple">
+<li><p>Valida se os membros existem no serviço de autenticação.</p></li>
+<li><p>Verifica se o nome ou abreviação já existem no campus.</p></li>
+<li><p>Consulta o serviço de competições para validar a inscrição.</p></li>
+<li><p>Verifica se os membros já não estão em outra equipe na mesma competição.</p></li>
+<li><p>Publica uma mensagem para um processo de aprovação assíncrono.</p></li>
+</ul>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fúria do Basquete&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;abbreviation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FDB&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;competition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;members&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;20231012030011&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;20231012030015&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;20241012030022&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;20221012030001&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;20211012030005&quot;</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Exemplo de Resposta (202 Accepted):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solicitação de criação de equipe enviada para aprovação!&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d4e5f6a7-b8c9-d0e1-f2a3-b4c5d6e7f8a9&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Status Codes<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -287,6 +358,27 @@
 <dt class="sig sig-object http" id="get--api-v1-teams-team_id">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/teams/{team_id}</span></span><a class="headerlink" href="#get--api-v1-teams-team_id" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Get Team By Id</strong></p>
+<p>Get Team By Id</p>
+<p>Retorna os detalhes de uma equipe específica pelo seu ID.
+O acesso é restrito ao campus do usuário autenticado.</p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Titãs do Futsal&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;abbreviation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TTF&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;approved&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;campus_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NAT-CN&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;members&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20231012030011&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20231012030015&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -306,6 +398,25 @@
 <dt class="sig sig-object http" id="delete--api-v1-teams-team_id">
 <span class="sig-name descname"><span class="pre">DELETE</span> </span><span class="sig-name descname"><span class="pre">/api/v1/teams/{team_id}</span></span><a class="headerlink" href="#delete--api-v1-teams-team_id" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Delete Team By Id</strong></p>
+<p>Delete Team By Id</p>
+<p>Envia uma solicitação para exclusão de uma equipe. A operação não é imediata.</p>
+<ul class="simple">
+<li><p>Requer um motivo (<cite>reason</cite>) no corpo da requisição.</p></li>
+<li><p>Publica uma mensagem para um processo de aprovação assíncrono.</p></li>
+</ul>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A equipe foi desfeita por decisão unânime dos membros.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Exemplo de Resposta (202 Accepted):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solicitação de remoção de equipe enviada para aprovação!&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -325,6 +436,30 @@
 <dt class="sig sig-object http" id="get--api-v1-teams-team_id-members-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/teams/{team_id}/members/</span></span><a class="headerlink" href="#get--api-v1-teams-team_id-members-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Get Team Members By Team Id</strong></p>
+<p>Get Team Members By Team Id</p>
+<p>Obtém todos os membros de uma equipe específica.</p>
+<ul class="simple">
+<li><p><strong>Autenticação</strong>: Requer um token de usuário válido.</p></li>
+<li><p><strong>Autorização</strong>: O usuário autenticado deve pertencer ao grupo ‘Jogador’ ou ‘Organizador’.</p></li>
+<li><p>A busca da equipe é limitada ao campus do usuário autenticado.</p></li>
+</ul>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20231012030011&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-04T21:14:25.123Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-04T21:14:25.123Z&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20231012030015&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-04T21:15:00.456Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-04T21:15:00.456Z&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -333,7 +468,9 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Successful Response</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Membros da equipe retornados com sucesso.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – O usuário não tem permissão para visualizar os membros.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – A equipe com o ID fornecido não foi encontrada.</p></li>
 <li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – Validation Error</p></li>
 </ul>
 </dd>
@@ -344,6 +481,27 @@
 <dt class="sig sig-object http" id="post--api-v1-teams-team_id-members-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/teams/{team_id}/members/</span></span><a class="headerlink" href="#post--api-v1-teams-team_id-members-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Add Team Member To Team</strong></p>
+<p>Add Team Member To Team</p>
+<p>Envia uma solicitação para adicionar um novo membro a uma equipe.</p>
+<ul class="simple">
+<li><p><strong>Autenticação</strong>: Requer um token de usuário válido.</p></li>
+<li><p><strong>Autorização</strong>: O usuário solicitante deve ser membro da equipe e pertencer aos grupos ‘Jogador’ ou ‘Organizador’.</p></li>
+<li><p><strong>Validação</strong>: O <cite>user_id</cite> do novo membro é validado contra o serviço de autenticação.</p></li>
+</ul>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20231012030020&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Exemplo de Resposta (202 Accepted):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solicitação de adição de membro enviada para aprovação!&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;member_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20231012030020&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -352,7 +510,11 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Successful Response</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.3">202 Accepted</a></span> – Solicitação para adicionar membro foi recebida e enviada para aprovação.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – O usuário a ser adicionado não é válido ou não foi encontrado no serviço de autenticação.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – O usuário solicitante não tem permissão para adicionar membros.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – A equipe com o ID fornecido não foi encontrada.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.10">409 Conflict</a></span> – O usuário já é um membro da equipe.</p></li>
 <li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – Validation Error</p></li>
 </ul>
 </dd>
@@ -363,6 +525,27 @@
 <dt class="sig sig-object http" id="delete--api-v1-teams-team_id-members-team_member_id">
 <span class="sig-name descname"><span class="pre">DELETE</span> </span><span class="sig-name descname"><span class="pre">/api/v1/teams/{team_id}/members/{team_member_id}</span></span><a class="headerlink" href="#delete--api-v1-teams-team_id-members-team_member_id" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Remove Team Member From Team</strong></p>
+<p>Remove Team Member From Team</p>
+<p>Envia uma solicitação para remover um membro de uma equipe.</p>
+<ul class="simple">
+<li><p><strong>Autenticação</strong>: Requer um token de usuário válido.</p></li>
+<li><p><strong>Autorização</strong>: O usuário solicitante deve ser membro da equipe e pertencer aos grupos ‘Jogador’ ou ‘Organizador’.</p></li>
+<li><p><strong>Corpo da Requisição</strong>: É obrigatório fornecer um <cite>reason</cite> (motivo) para a remoção.</p></li>
+</ul>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;O membro solicitou a sua saída da equipe.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solicitação de remoção de membro enviada para aprovação!&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;member_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20231012030015&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -372,7 +555,10 @@
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Successful Response</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a></span> – Solicitação para remover membro foi recebida e enviada para aprovação.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a></span> – O motivo da remoção é obrigatório e não foi fornecido.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">403 Forbidden</a></span> – O usuário solicitante não tem permissão para remover membros.</p></li>
+<li><p><span><a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a></span> – A equipe ou o membro não foram encontrados.</p></li>
 <li><p><span><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc4918#section-11.2">422 Unprocessable Entity</a></span> – Validation Error</p></li>
 </ul>
 </dd>
