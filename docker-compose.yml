@@ -19,6 +19,18 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+ 
+  frontend: 
+    build:
+      context: ./frontend-ifsports
+      dockerfile: Dockerfile
+    container_name: nextjs-frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - kong-gateway
 
   db_teams:
     image: postgres:15

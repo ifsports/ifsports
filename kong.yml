@@ -88,8 +88,6 @@ services:
           - /socket.io
           - /socket.io/
         strip_path: false
-        plugins:
-          - name: jwt
 
   - name: teams-service
     url: http://teamsapi:8003
@@ -178,7 +176,22 @@ services:
           - GET
         strip_path: true
         preserve_host: true
+      #NOVO BLOCO
+      - name: audit-admin-interface-route
+        paths:
+          - /admin
+          - /admin/
+        strip_path: false
+        preserve_host: true
+        # SEM PLUGIN de segurança. Acesso público à tela de login.
 
+      # Rota para os arquivos estáticos do Admin
+      - name: audit-admin-static-route
+        paths:
+          - /static/admin
+        strip_path: false
+        preserve_host: true
+        # SEM PLUGIN de segurança.
   - name: calendar-service
     url: http://calendarapi:8012
     routes:
