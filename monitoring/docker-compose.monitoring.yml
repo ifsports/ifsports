@@ -39,7 +39,7 @@ services:
     container_name: promtail
     volumes:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - ./monitoring/promtail-config.yml:/etc/promtail/config.yml
+      - ./promtail-config.yml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
     networks:
       - app-network
