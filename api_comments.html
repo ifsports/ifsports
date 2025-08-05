@@ -253,6 +253,18 @@
 <dt class="sig sig-object http" id="get--api-v1-matches-match_id-chat-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/matches/{match_id}/chat/</span></span><a class="headerlink" href="#get--api-v1-matches-match_id-chat-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Chat Details</strong></p>
+<p>Get Chat Details by Match</p>
+<p>Retorna os detalhes da sala de chat associada a uma partida específica.
+Cada partida possui uma única sala de chat.</p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;match_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-10T13:59:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;finished_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -272,6 +284,27 @@
 <dt class="sig sig-object http" id="get--api-v1-chat-chat_id-messages-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/chat/{chat_id}/messages/</span></span><a class="headerlink" href="#get--api-v1-chat-chat_id-messages-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Get Messages</strong></p>
+<p>List Messages in a Chat</p>
+<p>Lista todas as mensagens de uma sala de chat específica.</p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;f1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;chat_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20231012030011&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bom dia! Alguém sabe que horas começa o jogo?&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-10T09:30:00Z&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;e1f2a3b4-c5d6-e7f8-a9b0-c1d2e3f4a5b6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;chat_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20221012030005&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Acho que é às 14h.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-10T09:32:15Z&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -291,6 +324,29 @@
 <dt class="sig sig-object http" id="post--api-v1-chat-chat_id-messages-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/chat/{chat_id}/messages/</span></span><a class="headerlink" href="#post--api-v1-chat-chat_id-messages-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Create Message</strong></p>
+<p>Create a Message</p>
+<p>Envia uma nova mensagem para uma sala de chat.
+- A ação é restrita a usuários com o papel ‘Organizador’ ou ‘Jogador’.
+- Após o envio, um evento WebSocket (<cite>new_message</cite>) é emitido para a sala da partida</p>
+<blockquote>
+<div><p>associada ao chat, permitindo a atualização em tempo real para os clientes.</p>
+</div></blockquote>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;O jogo foi confirmado para as 14h. Não se atrasem!&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d4e5f6a7-b8c9-d0e1-f2a3-b4c5d6e7f8a9&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;chat_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20211012030001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;O jogo foi confirmado para as 14h. Não se atrasem!&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-10T10:05:00Z&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -310,6 +366,25 @@
 <dt class="sig sig-object http" id="get--api-v1-matches-match_id-comments-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/matches/{match_id}/comments/</span></span><a class="headerlink" href="#get--api-v1-matches-match_id-comments-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Get Comments</strong></p>
+<p>List Comments by Match</p>
+<p>Lista todos os comentários associados a uma partida específica, identificada pelo <cite>match_id</cite>.</p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;match_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Que golaço do time da casa!&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-10T14:15:30Z&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b2c3d4e5-f6a7-b8c9-d0e1-f2a3b4c5d6e7&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;match_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Juiz marcou falta, mas não pareceu.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-10T14:18:05Z&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -329,6 +404,25 @@
 <dt class="sig sig-object http" id="post--api-v1-matches-match_id-comments-">
 <span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/api/v1/matches/{match_id}/comments/</span></span><a class="headerlink" href="#post--api-v1-matches-match_id-comments-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Create Comment</strong></p>
+<p>Create a Comment</p>
+<p>Cria um novo comentário para uma partida. A ação é restrita a usuários com o papel ‘Organizador’.
+Após a criação, um evento WebSocket (<cite>create_comment</cite>) é emitido para a sala da partida,
+permitindo que clientes atualizem a UI em tempo real. Um log de auditoria também é gerado.</p>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cartão amarelo para o camisa 5 por reclamação.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d4e5f6a7-b8c9-d0e1-f2a3-b4c5d6e7f8a9&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;match_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cartão amarelo para o camisa 5 por reclamação.&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-10T14:25:10Z&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -348,6 +442,18 @@
 <dt class="sig sig-object http" id="get--api-v1-matches-match_id-comments-comment_id">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/matches/{match_id}/comments/{comment_id}</span></span><a class="headerlink" href="#get--api-v1-matches-match_id-comments-comment_id" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Comment Details</strong></p>
+<p>Get Comment Details</p>
+<p>Busca os detalhes de um comentário específico pelo seu ID.
+O acesso é restrito a usuários com o papel ‘Organizador’.</p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;match_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Que golaço do time da casa!&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-10T14:15:30Z&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -368,6 +474,16 @@
 <dt class="sig sig-object http" id="put--api-v1-matches-match_id-comments-comment_id">
 <span class="sig-name descname"><span class="pre">PUT</span> </span><span class="sig-name descname"><span class="pre">/api/v1/matches/{match_id}/comments/{comment_id}</span></span><a class="headerlink" href="#put--api-v1-matches-match_id-comments-comment_id" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Update Comment</strong></p>
+<p>Update a Comment</p>
+<p>Atualiza o corpo de um comentário existente.
+Após a atualização, um evento WebSocket (<cite>update_comment</cite>) é emitido para a sala da partida.
+Ação restrita a usuários com o papel ‘Organizador’. A rota não retorna conteúdo.</p>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Correção: O cartão foi para o camisa 8, não o 5.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -388,6 +504,10 @@
 <dt class="sig sig-object http" id="delete--api-v1-matches-match_id-comments-comment_id">
 <span class="sig-name descname"><span class="pre">DELETE</span> </span><span class="sig-name descname"><span class="pre">/api/v1/matches/{match_id}/comments/{comment_id}</span></span><a class="headerlink" href="#delete--api-v1-matches-match_id-comments-comment_id" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Delete Comment</strong></p>
+<p>Delete a Comment</p>
+<p>Exclui um comentário existente.
+Após a exclusão, um evento WebSocket (<cite>delete_comment</cite>) é emitido para a sala da partida.
+Ação restrita a usuários com o papel ‘Organizador’. A rota não retorna conteúdo.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -408,10 +528,42 @@
 <dt class="sig sig-object http" id="get--api-v1-matches-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/matches/</span></span><a class="headerlink" href="#get--api-v1-matches-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Get Matches</strong></p>
+<p>List Matches by Competition</p>
+<p>Lista as partidas de uma competição específica. O parâmetro <cite>competition_id</cite> é obrigatório.
+A lista é ordenada para mostrar primeiro as partidas “em progresso” e depois por data de início.
+A rota suporta paginação através dos parâmetros <cite>limit</cite> e <cite>offset</cite>.</p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;match_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;competition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;team_home_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d1e2f3a4-b5c6-d7e8-f9a0-b1c2d3e4f5a6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;team_away_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;e1f2a3b4-c5d6-e7f8-a9b0-c1d2e3f4a5b6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;score_home&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;score_away&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;in-progress&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;start_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-10T14:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;round&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;match_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b2c3d4e5-f6a7-b8c9-d0e1-f2a3b4c5d6e7&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;competition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;team_home_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;f1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;team_away_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;score_home&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;score_away&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not-started&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;start_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-10T16:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;round&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Query Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>competition_id</strong> (<em>string</em>) – Filtrar partidas por competição</p></li>
+<li><p><strong>competition_id</strong> (<em>string</em>) – Filtrar partidas por competição
+(Required)</p></li>
 <li><p><strong>limit</strong> (<em>integer</em>) – Número máximo de partidas por página</p></li>
 <li><p><strong>offset</strong> (<em>integer</em>) – Número de partidas a pular</p></li>
 </ul>
@@ -429,6 +581,22 @@
 <dt class="sig sig-object http" id="get--api-v1-matches-match_id">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/matches/{match_id}</span></span><a class="headerlink" href="#get--api-v1-matches-match_id" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Get Match Details</strong></p>
+<p>Get Match Details</p>
+<p>Busca os detalhes de uma partida específica pelo seu ID.</p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;match_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;competition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-7890-1234-567890abcdef&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;team_home_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d1e2f3a4-b5c6-d7e8-f9a0-b1c2d3e4f5a6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;team_away_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;e1f2a3b4-c5d6-e7f8-a9b0-c1d2e3f4a5b6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;score_home&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;score_away&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;in-progress&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;start_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-10T14:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;round&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -448,6 +616,10 @@
 <dt class="sig sig-object http" id="patch--api-v1-matches-match_id-start-match">
 <span class="sig-name descname"><span class="pre">PATCH</span> </span><span class="sig-name descname"><span class="pre">/api/v1/matches/{match_id}/start-match</span></span><a class="headerlink" href="#patch--api-v1-matches-match_id-start-match" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Start Match</strong></p>
+<p>Start a Match</p>
+<p>Inicia uma partida, alterando seu status para ‘in-progress’.
+Esta é uma ação restrita a usuários com o papel ‘Organizador’.
+A rota não retorna conteúdo no corpo da resposta.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -467,6 +639,13 @@
 <dt class="sig sig-object http" id="delete--api-v1-matches-match_id-end-match">
 <span class="sig-name descname"><span class="pre">DELETE</span> </span><span class="sig-name descname"><span class="pre">/api/v1/matches/{match_id}/end-match</span></span><a class="headerlink" href="#delete--api-v1-matches-match_id-end-match" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>End Match</strong></p>
+<p>End a Match</p>
+<p>Finaliza uma partida. Esta ação:
+1. Altera o status da partida para ‘finished’.
+2. Publica uma mensagem para notificar outros serviços sobre o resultado.
+3. Remove o registro da partida da tabela de partidas ativas.</p>
+<p>Esta é uma ação restrita a usuários com o papel ‘Organizador’.
+A rota não retorna conteúdo no corpo da resposta.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -486,6 +665,18 @@
 <dt class="sig sig-object http" id="patch--api-v1-matches-match_id-update-score">
 <span class="sig-name descname"><span class="pre">PATCH</span> </span><span class="sig-name descname"><span class="pre">/api/v1/matches/{match_id}/update-score</span></span><a class="headerlink" href="#patch--api-v1-matches-match_id-update-score" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Update Match Score</strong></p>
+<p>Update Match Score</p>
+<p>Atualiza o placar de uma partida em andamento.
+Após a atualização, um evento WebSocket (<cite>score_updated</cite>) é emitido para a sala
+correspondente ao <cite>match_id</cite>, permitindo que clientes atualizem a UI em tempo real.
+Esta é uma ação restrita a usuários com o papel ‘Organizador’.</p>
+<p><strong>Exemplo de Corpo da Requisição (Payload):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;score_home&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;score_away&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
