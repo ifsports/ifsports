@@ -14,7 +14,7 @@ SERVICES=(
   "teams:/docs/teams/openapi.json"
   "requests:/docs/requests/openapi.json"
   "comments:/docs/comments/openapi.json"
-  # "calendar:/docs/calendar/openapi.json"
+  "calendar:/docs/calendar/openapi.json"
 )
 
 echo "🚀 Coletando especificações OpenAPI..."
