@@ -5,7 +5,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -17,7 +17,7 @@ services:
     image: grafana/grafana-oss:latest
     container_name: grafana
     env_file:
-      - ./monitoring/.env
+      - .env
     ports:
       - "4000:3000"
     volumes:
@@ -37,9 +37,7 @@ services:
     image: prometheuscommunity/postgres-exporter
     container_name: postgres-exporter-teams
     env_file:
-      - ../envs/teams.env
-    environment:
-      - DATA_SOURCE_NAME=postgresql://postgres:${POSTGRES_PASSWORD}@db_teams:5432/db_teams?sslmode=disable
+      - ../envs/teams.env 
     networks:
       - app-network
     restart: unless-stopped
@@ -49,8 +47,6 @@ services:
     container_name: postgres-exporter-requests
     env_file:
       - ../envs/requests.env
-    environment:
-      - DATA_SOURCE_NAME=postgresql://IntegradorEstelar_42:${POSTGRES_PASSWORD}@db_requests:5432/db_requests?sslmode=disable
     networks:
       - app-network
     restart: unless-stopped
@@ -60,8 +56,6 @@ services:
     container_name: postgres-exporter-auth
     env_file:
       - ../envs/auth.env
-    environment:
-      - DATA_SOURCE_NAME=postgresql://auth_user:${POSTGRES_PASSWORD}@db_auth:5432/auth_db?sslmode=disable
     networks:
       - app-network
     restart: unless-stopped
@@ -71,8 +65,6 @@ services:
     container_name: postgres-exporter-calendar
     env_file:
       - ../envs/calendar.env
-    environment:
-      - DATA_SOURCE_NAME=postgresql://IntegradorMundial_87:${POSTGRES_PASSWORD}@db_calendar:5432/db_calendar?sslmode=disable
     networks:
       - app-network
     restart: unless-stopped
@@ -82,8 +74,6 @@ services:
     container_name: postgres-exporter-competitions
     env_file:
       - ../envs/competitions.env
-    environment:
-      - DATA_SOURCE_NAME=postgresql://IntegradorGalatico_77:${POSTGRES_PASSWORD}@db_competitions:5432/db_competitions?sslmode=disable
     networks:
       - app-network
     restart: unless-stopped
@@ -93,8 +83,6 @@ services:
     container_name: postgres-exporter-match-comments
     env_file:
       - ../envs/match_comments.env
-    environment:
-      - DATA_SOURCE_NAME=postgresql://IntegradorInternacional_94:${POSTGRES_PASSWORD}@db_match_comments:5432/db_match_comments?sslmode=disable
     networks:
       - app-network
     restart: unless-stopped
@@ -104,24 +92,9 @@ services:
     container_name: postgres-exporter-audit
     env_file:
       - ../envs/audit.env
-    environment:
-      - DATA_SOURCE_NAME=postgresql://audit_user:${POSTGRES_PASSWORD}@db_audit:5432/audit_db?sslmode=disable
     networks:
       - app-network
     restart: unless-stopped
-
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor:latest
-    container_name: cadvisor
-    ports:
-      - "8080:8080"
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    networks:
-      - app-network
 
 volumes:
   prometheus_data: {}
