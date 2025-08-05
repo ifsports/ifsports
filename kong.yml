@@ -15,34 +15,20 @@ services:
           - /auth/suap/callback
         strip_path: false
         preserve_host: true
-      - name: auth-protected-user-me-route
-        methods:
-          - GET
-        paths:
-          - /api/v1/auth/users/me
-        plugins:
-          - name: jwt
-        strip_path: false
-        preserve_host: true
       - name: auth-public-validate-users-route
         methods:
           - POST
+          - GET
         paths:
           - /api/v1/auth/users
         strip_path: false
         preserve_host: true
-      - name: auth-public-users-by-ids-route
-        methods:
-          - POST
+      - name: auth-protected-users-route
         paths:
-          - /api/v1/auth/users/by-ids
-        strip_path: false
-        preserve_host: true
-      - name: auth-public-user-detail-route
-        methods:
-          - GET
-        paths:
-          - /api/v1/auth/users/
+          - /api/v1/auth/logout
+          - /api/v1/auth/users/me
+        plugins:
+          - name: jwt
         strip_path: false
         preserve_host: true
       - name: auth-public-schema
