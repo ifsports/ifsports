@@ -16,6 +16,8 @@ services:
   grafana:
     image: grafana/grafana-oss:latest
     container_name: grafana
+    env_file:
+      - .env
     ports:
       - "4000:3000"
     volumes:
@@ -24,7 +26,12 @@ services:
       - app-network
     depends_on:
       - prometheus
-    restart: unless-stopped
+    environment: # <-- ADICIONE ESTA SEÇÃO COMPLETA
+      - GF_SMTP_ENABLED=true
+      - GF_SMTP_HOST=smtp.gmail.com:587
+      - GF_SMTP_USER=hiansilva27@gmail.com
+      - GF_SMTP_FROM_ADDRESS=hiansilva27@gmail.com
+      - GF_SMTP_FROM_NAME=Grafana Alertas IFsports
 
   loki:
     image: grafana/loki:latest
