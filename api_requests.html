@@ -253,11 +253,43 @@
 <dt class="sig sig-object http" id="get--api-v1-requests-">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/requests/</span></span><a class="headerlink" href="#get--api-v1-requests-" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Get Requests</strong></p>
+<p>List Requests</p>
+<p>Lista as solicitações pendentes, aprovadas ou rejeitadas. O acesso é restrito para usuários com o papel ‘Organizador’.
+É possível filtrar a lista por status (ex: <cite>pending</cite>) ou por tipo de solicitação (ex: <cite>approve_team</cite>).</p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;request_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;approve_team&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pending&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;reason_rejected&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;campus_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NAT-CN&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-b7c8-d9e0-f1a2b3c4d5e6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;competition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d1e2f3a4-b5c6-d7e8-f9a0-b1c2d3e4f5a6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-04T21:14:25.123Z&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b2c3d4e5-f6a7-b8c9-d0e1-f2a3b4c5d6e7&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;request_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;add_team_member&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pending&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;reason_rejected&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;campus_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NAT-CN&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-b7c8-d9e0-f1a2b3c4d5e6&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;20231012030015&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;competition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-04T22:30:00.000Z&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Query Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>status</strong> (<em>{'null', 'string'}</em>) – Filtrar solicitações por status</p></li>
-<li><p><strong>request_type</strong> (<em>{'null', 'string'}</em>) – Filtrar solicitações por tipo</p></li>
+<li><p><strong>status</strong> (<em>{'string', 'null'}</em>) – Filtrar solicitações por status</p></li>
+<li><p><strong>request_type</strong> (<em>{'string', 'null'}</em>) – Filtrar solicitações por tipo</p></li>
 </ul>
 </dd>
 <dt class="field-even">Status Codes<span class="colon">:</span></dt>
@@ -273,6 +305,24 @@
 <dt class="sig sig-object http" id="get--api-v1-requests-request_id">
 <span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/api/v1/requests/{request_id}</span></span><a class="headerlink" href="#get--api-v1-requests-request_id" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Details Request</strong></p>
+<p>Get Request Details</p>
+<p>Busca os detalhes de uma solicitação específica pelo seu ID.
+O acesso é restrito para usuários com o papel ‘Organizador’.</p>
+<p><strong>Exemplo de Resposta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;request_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;approve_team&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pending&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Criação da equipe para os JIFs 2025.&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;reason_rejected&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;campus_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NAT-CN&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-b7c8-d9e0-f1a2b3c4d5e6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;competition_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d1e2f3a4-b5c6-d7e8-f9a0-b1c2d3e4f5a6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-08-04T21:14:25.123Z&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -292,6 +342,35 @@
 <dt class="sig sig-object http" id="put--api-v1-requests-request_id">
 <span class="sig-name descname"><span class="pre">PUT</span> </span><span class="sig-name descname"><span class="pre">/api/v1/requests/{request_id}</span></span><a class="headerlink" href="#put--api-v1-requests-request_id" title="Link para esta definição">¶</a></dt>
 <dd><p><strong>Update Request Reason Rejected</strong></p>
+<p>Approve or Reject a Request</p>
+<p>Aprova ou rejeita uma solicitação pendente. Esta ação é realizada por um ‘Organizador’.
+A rota atualiza o status da solicitação e publica um evento para que o serviço correspondente
+(ex: serviço de times) execute a ação final (criar time, adicionar membro, etc.).</p>
+<ul class="simple">
+<li><p>Para rejeitar, o status deve ser <cite>rejected</cite> e o campo <cite>reason_rejected</cite> é obrigatório.</p></li>
+<li><p>Para aprovar, o status deve ser <cite>approved</cite>.</p></li>
+</ul>
+<p><strong>Exemplo de Corpo da Requisição (Aprovação):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;approved&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Exemplo de Corpo da Requisição (Rejeição):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rejected&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;reason_rejected&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A equipe não possui o número mínimo de membros inscritos.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Exemplo de Resposta (202 Accepted):</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solicitação para criação de equipe atualizada!&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;team_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c1d2e3f4-a5b6-b7c8-d9e0-f1a2b3c4d5e6&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;campus_code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NAT-CN&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
